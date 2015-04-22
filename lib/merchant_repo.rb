@@ -11,7 +11,7 @@ class MerchantRepo
 
   def populate(csv_object)
     csv_object.each do |row|
-      @merchants << Merchant.new(row[:id].to_i, row[:name], row[:created_at], row[:updated_at])
+      @merchants << Merchant.new(row[:id].to_i, row[:name], row[:created_at], row[:updated_at], self)
     end
   end
 
