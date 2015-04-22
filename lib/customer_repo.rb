@@ -11,8 +11,12 @@ class CustomerRepo
 
   def populate(csv_object)
     csv_object.each do |row|
-      @customers << Customer.new(row[:id].to_i, row[:first_name], row[:last_name], row[:created_at], row[:updated_at])
+      @customers << Customer.new(row[:id].to_i, row[:first_name], row[:last_name], row[:created_at], row[:updated_at], self)
     end
+  end
+
+  def invoices(id)
+    @engine.invoice_repo.find_all_by_customer_id(id)
   end
 
   def all
