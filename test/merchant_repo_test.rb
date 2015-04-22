@@ -26,7 +26,18 @@ class MerchantRepoTest < MiniTest::Test
   def test_random_returns_one_random_merchant_obj
     se = SalesEngine.new
     se.startup
-    assert_equal Merchant, se.merchant_repo.random.class
+    merchant_one = se.merchant_repo.merchants.random
+    merchant_two = se.merchant_repo.merchants.random
+    100.times do
+      break if merchant_one.id == merchant_two.id
+      # merchant_two = merchant_repo.merchants.random
+    end
+    refute_equal merchant_one.id, merchant_two.id
+
+    # se = SalesEngine.new
+    # se.startup
+    # assert_equal Merchant, se.merchant_repo.random.class
+    # refute se.merchant_repo.random.empty?
   end
 
   def test_find_a_merchant_by_id
