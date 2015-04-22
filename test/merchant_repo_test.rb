@@ -16,11 +16,27 @@ class MerchantRepoTest < MiniTest::Test
     assert se.merchant_repo.merchants
   end
 
-  def test_creates_merchant_objects_from_string
-    skip
-    mr = MerchantRepo.new("test")
-    mr.populate("string")
-    mr.records
+  def test_all_returns_an_array_of_merchants
+    se = SalesEngine.new
+    se.startup
+    assert_equal Array, se.merchant_repo.merchants.class
+  end
 
+  def test_random_returns_one_random_merchant_obj
+    se = SalesEngine.new
+    se.startup
+    assert_equal Merchant, se.merchant_repo.random.class
+  end
+
+  def test_find_a_merchant_by_id
+    se = SalesEngine.new
+    se.startup
+    assert_equal "Williamson Group", se.merchant_repo.find_by_id(5).name
+  end
+
+  def test_find_all_merchants_by_name
+    se = SalesEngine.new
+    se.startup
+    assert_equal 2, se.merchant_repo.find_all_by_name("Williamson Group").size
   end
 end

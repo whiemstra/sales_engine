@@ -26,4 +26,27 @@ class SalesEngine
   def populate_merchant_repo
     @merchant_repo.populate(CSVParser.parse_merchants)
   end
+
+  def populate_invoice_repo
+    @invoice_repo.populate(CSVParser.parse_invoices)
+  end
+
+  def populate_item_repo
+    @item_repo.populate(CSVParser.parse_items)
+  end
+
+  def populate_invoice_item_repo
+    @invoice_item_repo.populate(CSVParser.parse_invoice_items)
+  end
+
+  def populate_customer_repo
+    @customer_repo.populate(CSVParser.parse_customers)
+  end
+
+  def populate_transaction_repo
+    @transaction_repo.populate(CSVParser.parse_transactions)
+  end
+
+
+
 end
