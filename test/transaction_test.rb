@@ -15,7 +15,6 @@ class TransactionTest < Minitest::Test
     se = SalesEngine.new
     se.startup
     transaction = se.transaction_repo.find_by_id(717)
-    assert_equal 609, transaction.invoices
-    #assert_equal Transaction, invoice.transactions[0].class
+    assert_equal 609, transaction.invoice.id
   end
 end
