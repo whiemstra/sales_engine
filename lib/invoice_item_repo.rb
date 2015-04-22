@@ -11,7 +11,10 @@ class InvoiceItemRepo
 
   def populate(csv_object)
     csv_object.each do |row|
-      @invoice_items << InvoiceItem.new(row[:id].to_i, row[:item_id].to_i, row[:invoice_id].to_i, row[:quantity].to_i, row[:unit_price].to_i, row[:created_at], row[:updated_at])
+      @invoice_items << InvoiceItem.new(row[:id].to_i, row[:item_id].to_i,
+                                        row[:invoice_id].to_i, row[:quantity].to_i,
+                                        row[:unit_price].to_i, row[:created_at],
+                                        row[:updated_at])
     end
   end
 
