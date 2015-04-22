@@ -12,16 +12,19 @@ class SalesEngine
   attr_reader :merchant_repo, :invoice_repo, :items_repo, :invoice_item_repo, :customer_repo, :transaction_repo
   def initialize
     @merchant_repo = MerchantRepo.new(self)
-    @invoice_repo = InvoiceRepo.new
+    @invoice_repo = InvoiceRepo.new(self)
     @items_repo = ItemsRepo.new(self)
-    @invoice_item_repo = InvoiceItemRepo.new
-    @customer_repo = CustomerRepo.new
+    @invoice_item_repo = InvoiceItemRepo.new(self)
+    @customer_repo = CustomerRepo.new(self)
     @transaction_repo = TransactionRepo.new(self)
   end
 
   def startup
     populate_merchant_repo
+    populate_invoice_repo
     populate_items_repo
+    populate_invoice_item_repo
+    populate_customer_repo
     populate_transaction_repo
   end
 
