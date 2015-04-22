@@ -14,8 +14,16 @@ class InvoiceItemRepo
       @invoice_items << InvoiceItem.new(row[:id].to_i, row[:item_id].to_i,
                                         row[:invoice_id].to_i, row[:quantity].to_i,
                                         row[:unit_price].to_i, row[:created_at],
-                                        row[:updated_at])
+                                        row[:updated_at], self)
     end
+  end
+
+  def invoice(invoice_id)
+    @engine.invoice_repo.find_by_id(invoice_id)
+  end
+
+  def item(item_id)
+    @engine.items_repo.find_by_id(item_id)
   end
 
   def all
