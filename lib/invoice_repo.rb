@@ -11,8 +11,29 @@ class InvoiceRepo
 
   def populate(csv_object)
     csv_object.each do |row|
-      @invoices << Invoice.new(row[:id].to_i, row[:customer_id].to_i, row[:merchant_id].to_i, row[:status], row[:created_at], row[:updated_at])
+      @invoices << Invoice.new(row[:id].to_i, row[:customer_id].to_i, row[:merchant_id].to_i, row[:status], row[:created_at], row[:updated_at], self)
     end
+  end
+
+  def transactions(id)
+    @engine.transaction_repo.find_all_by_invoice_id(id)
+  end
+
+  def invoice_items(id)
+    @engine.invoice_item_repo.find_all_by_invoice_id(id)
+  end
+
+  def items(id)
+    item_id_list = invoice_items(id).map { |ii| ii.item_id }
+    item_id_list.collect { |id| @engine.items_repo.find_by_id(id) }
+  end
+
+  def customer(customer_id)
+    @engine.customer_repo.find_by_id(customer_id)
+  end
+
+  def merchant(merchant_id)
+    @engine.merchant_repo.find_by_id(merchant_id)
   end
 
   def all

@@ -12,7 +12,7 @@ class InvoiceRepoTest < MiniTest::Test
 
   def test_can_populate_from_csv_file
     se = SalesEngine.new
-    se.startup
+    se.populate.invoice_repo
     assert se.invoice_repo.invoices
   end
 
@@ -40,4 +40,3 @@ class InvoiceRepoTest < MiniTest::Test
     assert_equal 8, se.invoice_repo.find_all_by_customer_id(10).size
   end
 end
-
