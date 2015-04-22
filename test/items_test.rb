@@ -18,5 +18,12 @@ class ItemTest < Minitest::Test
     assert_equal 15, item.invoice_items.size
     assert_equal InvoiceItem, item.invoice_items[0].class
   end
+
+  def test_can_find_associated_merchant
+    se = SalesEngine.new
+    se.startup
+    item = se.items_repo.find_by_id(18)
+    assert_equal "Klein, Rempel and Jones", item.merchant.name
+  end
 end
 

@@ -15,4 +15,8 @@ class Item
   def invoice_items
     @repo.invoice_items(id)
   end
+
+  def merchant
+    @repo.merchant(merchant_id)
+  end
 end

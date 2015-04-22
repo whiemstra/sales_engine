@@ -19,6 +19,10 @@ class ItemsRepo
     @engine.invoice_item_repo.find_all_by_item_id(id)
   end
 
+  def merchant(merchant_id)
+    @engine.merchant_repo.find_by_id(merchant_id)
+  end
+
   def all
     @items
   end
