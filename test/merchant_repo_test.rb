@@ -20,6 +20,7 @@ class MerchantRepoTest < MiniTest::Test
     se = SalesEngine.new
     se.startup
     assert_equal Array, se.merchant_repo.merchants.class
+    refute se.merchant_repo.all.empty?
   end
 
   def test_random_returns_one_random_merchant_obj

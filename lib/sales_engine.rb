@@ -16,11 +16,11 @@ class SalesEngine
     @item_repo = ItemRepo.new
     @invoice_item_repo = InvoiceItemRepo.new
     @customer_repo = CustomerRepo.new
-    @transaction_repo = TransactionRepo.new
+    @transaction_repo = TransactionRepo.new(self)
   end
 
   def startup
-    populate_merchant_repo
+    populate_transaction_repo
   end
 
   def populate_merchant_repo
