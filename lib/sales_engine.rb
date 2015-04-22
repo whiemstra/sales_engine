@@ -20,7 +20,9 @@ class SalesEngine
   end
 
   def startup
+    populate_merchant_repo
     populate_items_repo
+    populate_transaction_repo
   end
 
   def populate_merchant_repo

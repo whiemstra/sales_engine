@@ -26,7 +26,7 @@ class TransactionRepoTest < MiniTest::Test
   def test_random_returns_one_random_transaction_obj
     se = SalesEngine.new
     se.startup
-    assert_equal Transactions, se.transaction_repo.random.class
+    assert_equal Transaction, se.transaction_repo.random.class
   end
 
   def test_find_a_transaction_by_id
@@ -58,18 +58,16 @@ class TransactionRepoTest < MiniTest::Test
     skip
     se = SalesEngine.new
     se.startup
-    assert_equal 4000, se.transaction_repo.find_by_result("success").id
+    assert_equal 1, se.transaction_repo.find_by_result("success").id
   end
 
   def test_it_can_find_by_created_at
-    skip
     se = SalesEngine.new
     se.startup
     assert_equal 976, se.transaction_repo.find_by_created_at("2012-03-27 14:54:50 UTC").id
   end
 
   def test_it_can_find_by_updated_at
-    skip
     se = SalesEngine.new
     se.startup
     assert_equal 5558, se.transaction_repo.find_by_updated_at("2012-03-27 14:58:14 UTC").id
