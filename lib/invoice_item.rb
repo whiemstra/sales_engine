@@ -12,4 +12,6 @@ class InvoiceItem
     @updated_at = updated_at
   end
 
+
+
 end

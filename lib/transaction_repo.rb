@@ -15,6 +15,10 @@ class TransactionRepo
     end
   end
 
+  def invoices(invoice_id)
+    @engine.invoice_repo.find_by_id(invoice_id)
+  end
+
   def all
     @transactions
   end

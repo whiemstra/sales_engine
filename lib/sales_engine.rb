@@ -51,7 +51,4 @@ class SalesEngine
   def populate_transaction_repo
     @transaction_repo.populate(CSVParser.parse_transactions)
   end
-
-
-
 end

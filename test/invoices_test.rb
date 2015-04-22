@@ -48,6 +48,4 @@ class InvoiceTest < Minitest::Test
     invoice = se.invoice_repo.find_by_id(12)
     assert_equal "Osinski, Pollich and Koelpin", invoice.merchant.name
   end
-
-
 end
