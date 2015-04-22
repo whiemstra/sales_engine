@@ -11,8 +11,12 @@ class ItemsRepo
 
   def populate(csv_object)
     csv_object.each do |row|
-      @items << Item.new(row[:id].to_i, row[:name], row[:description], row[:unit_price].to_i, row[:merchant_id].to_i, row[:created_at], row[:updated_at])
+      @items << Item.new(row[:id].to_i, row[:name], row[:description], row[:unit_price].to_i, row[:merchant_id].to_i, row[:created_at], row[:updated_at], self)
     end
+  end
+
+  def invoice_items(id)
+    @engine.invoice_item_repo.find_all_by_item_id(id)
   end
 
   def all
