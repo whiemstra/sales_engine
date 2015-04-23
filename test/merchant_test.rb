@@ -33,9 +33,19 @@ class MerchantTest < Minitest::Test
     se.populate_merchant_repo
     se.populate_invoice_repo
     se.populate_invoice_item_repo
+    se.populate_transaction_repo
     merchant = se.merchant_repo.find_by_id(1)
-    assert_equal 56612301, merchant.revenue
+    assert_equal 52877464, merchant.revenue
+  end
 
+  def test_find_revenue_by_date
+    se = SalesEngine.new
+    se.populate_merchant_repo
+    se.populate_invoice_repo
+    se.populate_invoice_item_repo
+    se.populate_transaction_repo
+    merchant = se.merchant_repo.find_by_id(1)
+    assert_equal 52877464, merchant.revenue('2012-03-27')
   end
 
 end
