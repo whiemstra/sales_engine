@@ -14,4 +14,8 @@ class Merchant
     repo.items(id)
   end
 
+  def invoices
+    repo.invoices(id)
+  end
+
 end
