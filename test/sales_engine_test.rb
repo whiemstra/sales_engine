@@ -9,7 +9,7 @@ class SalesEngineTest < Minitest::Test
     se = SalesEngine.new
     assert se.merchant_repo
     assert se.invoice_repo
-    assert se.item_repo
+    assert se.items_repo
     assert se.invoice_item_repo
     assert se.customer_repo
     assert se.transaction_repo
