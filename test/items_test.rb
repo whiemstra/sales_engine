@@ -31,7 +31,7 @@ class ItemTest < Minitest::Test
 
   # def test_item_has_unit_price
   #   item = Item.new(1, 2, 3, 59454, 5, 6, 7, 8)
-  #   assert_equal (BigDecimal.new(59454)/100), item.unit_price
+  #   assert_equal 59454 (BigDecimal???), item.unit_price
   # end
 
   def test_can_find_associated_merchant
