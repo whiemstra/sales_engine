@@ -71,4 +71,9 @@ class MerchantRepo
     viable_merchants.map { |merchant| merchant.revenue(date) }.reduce(:+)
   end
 
+  def most_items(num)
+    winners = @merchants.map { |merchant| [merchant.quantity, merchant.id] }.sort.reverse[0..(num - 1)]
+    winners.map { |array| array[1] }.map { |id| find_by_id(id) }
+  end
+
 end

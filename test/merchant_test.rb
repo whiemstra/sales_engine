@@ -48,4 +48,13 @@ class MerchantTest < Minitest::Test
     assert_equal 52877464, merchant.revenue('2012-03-27')
   end
 
+  def test_total_num_of_items_a_merchant_sold
+    se = SalesEngine.new
+    se.populate_merchant_repo
+    se.populate_invoice_repo
+    se.populate_invoice_item_repo
+    se.populate_transaction_repo
+    merchant = se.merchant_repo.find_by_id(1)
+    assert_equal 1380, merchant.quantity 
+  end
 end

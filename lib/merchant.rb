@@ -19,13 +19,16 @@ class Merchant
     invoices_for_date.map { |invoice| invoice.revenue }.reduce(:+)
   end
 
-
   def items
     repo.items(id)
   end
 
   def invoices
     repo.invoices(id)
+  end
+
+  def quantity
+    invoices.map { |invoice| invoice.quantity}.reduce(:+)
   end
 
 end
