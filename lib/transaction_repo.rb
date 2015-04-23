@@ -11,7 +11,7 @@ class TransactionRepo
 
   def populate(csv_object)
     csv_object.each do |row|
-      @transactions << Transaction.new(row[:id].to_i, row[:invoice_id].to_i, row[:credit_card_number].to_i, row[:credit_card_expiration_date], row[:result], row[:created_at], row[:updated_at])
+      @transactions << Transaction.new(row[:id].to_i, row[:invoice_id].to_i, row[:credit_card_number].to_i, row[:credit_card_expiration_date], row[:result], row[:created_at], row[:updated_at], self)
     end
   end
 

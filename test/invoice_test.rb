@@ -53,8 +53,11 @@ class InvoiceTest < Minitest::Test
     se = SalesEngine.new
     se.populate_invoice_item_repo
     se.populate_invoice_repo
+    se.populate_transaction_repo
     invoice = se.invoice_repo.find_by_id(1)
     assert_equal 2106777, invoice.revenue
+    invoice = se.invoice_repo.find_by_id(13)
+    assert_equal nil, invoice.revenue
   end
 
   def test_determines_if_it_was_successful
@@ -66,6 +69,5 @@ class InvoiceTest < Minitest::Test
     invoice = se.invoice_repo.find_by_id(13)
     refute invoice.successful?
   end
-
 
 end

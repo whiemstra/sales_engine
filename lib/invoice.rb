@@ -12,10 +12,6 @@ class Invoice
     @repo = repo
   end
 
-  def revenue
-    invoice_items.map { |ii| ii.revenue }.reduce(:+) if successful?
-  end
-
   def transactions
     @repo.transactions(id)
   end
@@ -38,6 +34,10 @@ class Invoice
 
   def successful?
     transactions.any? { |transaction| transaction.success? }
+  end
+
+  def revenue
+    invoice_items.map { |ii| ii.revenue }.reduce(:+) if successful?
   end
 
 end
