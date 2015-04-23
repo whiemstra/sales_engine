@@ -10,4 +10,9 @@ class Transaction
     @created_at = created_at
     @updated_at = updated_at
   end
+
+  def success?
+    result == "success"
+  end
+
 end

@@ -21,4 +21,8 @@ class InvoiceItem
     @repo.item(item_id)
   end
 
+  def revenue
+    @unit_price * @quantity
+  end
+
 end
