@@ -26,8 +26,8 @@ class MerchantRepoTest < MiniTest::Test
   def test_random_returns_one_random_merchant_obj
     se = SalesEngine.new
     se.startup
-    merchant_one = se.merchant_repo.merchants.random
-    merchant_two = se.merchant_repo.merchants.random
+    merchant_one = se.merchant_repo.random
+    merchant_two = se.merchant_repo.random
     100.times do
       break if merchant_one.id == merchant_two.id
       # merchant_two = merchant_repo.merchants.random
@@ -82,5 +82,17 @@ class MerchantRepoTest < MiniTest::Test
     se.startup
     result = se.merchant_repo.find_all_by_updated_at("2012-03-27 14:54:09 UTC")
     assert_equal 4, result.count
+  end
+
+  def test_return_top_x_merchants_by_revenue
+    se = SalesEngine.new
+    se.populate_invoice_item_repo
+    se.populate_invoice_repo
+    se.populate_merchant_repo
+    se.populate_transaction_repo
+    top_dawgs = se.merchant_repo.most_revenue(3)
+    assert_equal 3, top_dawgs.size
+    assert_equal Merchant, top_dawgs[0].class
+    assert top_dawgs[0].revenue > top_dawgs[1].revenue
   end
 end

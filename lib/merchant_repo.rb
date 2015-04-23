@@ -59,4 +59,9 @@ class MerchantRepo
     @merchants.select { |merchant| merchant.updated_at == date}
   end
 
+  def most_revenue(num)
+    winners = @merchants.map { |merchant| [merchant.revenue, merchant] }.sort.reverse[0..(num - 1)]
+    winners.map { |array| array[1] }
+  end
+
 end

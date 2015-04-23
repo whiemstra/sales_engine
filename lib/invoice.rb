@@ -37,7 +37,12 @@ class Invoice
   end
 
   def revenue
-    invoice_items.map { |ii| ii.revenue }.reduce(:+) if successful?
+    total = invoice_items.map { |ii| ii.revenue }.reduce(:+) if successful?
+    if total.nil?
+      return 0
+    else
+      return total
+    end
   end
 
 end
