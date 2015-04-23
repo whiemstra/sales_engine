@@ -64,4 +64,11 @@ class MerchantRepo
     winners.map { |array| array[1] }
   end
 
+  def revenue(date)
+    viable_merchants = @merchants.select do |merchant|
+      merchant.invoices.any? { |invoice| invoice.created_at[0..9] == date }
+    end
+    viable_merchants.map { |merchant| merchant.revenue(date) }.reduce(:+)
+  end
+
 end

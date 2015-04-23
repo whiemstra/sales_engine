@@ -95,4 +95,13 @@ class MerchantRepoTest < MiniTest::Test
     assert_equal Merchant, top_dawgs[0].class
     assert top_dawgs[0].revenue > top_dawgs[1].revenue
   end
+
+  def test_returns_total_revenue_by_date_for_all_merchants
+    se = SalesEngine.new
+    se.populate_invoice_item_repo
+    se.populate_invoice_repo
+    se.populate_merchant_repo
+    se.populate_transaction_repo
+    assert_equal 190836805, se.merchant_repo.revenue('2012-03-27')
+  end
 end
