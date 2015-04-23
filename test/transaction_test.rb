@@ -17,4 +17,14 @@ class TransactionTest < Minitest::Test
     transaction = se.transaction_repo.find_by_id(717)
     assert_equal 609, transaction.invoice.id
   end
+
+  def test_transaction_has_created_date_in_yyyymmdd_hhmmss_format
+    transaction = Transaction.new(1, 2, 3, 4, 'success', '2012-03-27 14:54:15 UTC', '2012-03-27 14:58:15 UTC', 'parent repo')
+    assert_equal "2012-03-27 14:54:15 UTC", transaction.created_at
+  end
+
+  def test_transaction_has_updated_date_in_yyyymmdd_hhmmss_format
+    transaction = Transaction.new(1, 2, 3, 4, 'success', '2012-03-27 14:54:15 UTC', '2012-03-27 14:58:15 UTC', 'parent repo')
+    assert_equal "2012-03-27 14:58:15 UTC", transaction.updated_at
+  end
 end

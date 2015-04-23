@@ -11,6 +11,11 @@ class ItemTest < Minitest::Test
     assert_equal 'parent repo', item.repo
   end
 
+  def test_item_has_name
+    item = Item.new(1, 'Item Adipisci Sint', 3, 4, 5, 6, 7, 8)
+    assert_equal 'Item Adipisci Sint', item.name
+  end
+
   def test_can_find_associated_invoice_items
     se = SalesEngine.new
     se.startup
@@ -18,6 +23,16 @@ class ItemTest < Minitest::Test
     assert_equal 15, item.invoice_items.size
     assert_equal InvoiceItem, item.invoice_items[0].class
   end
+
+  def test_item_has_description
+    item = Item.new(1, 2, 'Nostrum doloribus quia. Expedita vitae beatae cumque. Aut ut illo aut eum.', 4, 5, 6, 7, 8)
+    assert_equal "Nostrum doloribus quia. Expedita vitae beatae cumque. Aut ut illo aut eum.", item.description
+  end
+
+  # def test_item_has_unit_price
+  #   item = Item.new(1, 2, 3, 59454, 5, 6, 7, 8)
+  #   assert_equal (BigDecimal.new(59454)/100), item.unit_price
+  # end
 
   def test_can_find_associated_merchant
     se = SalesEngine.new
