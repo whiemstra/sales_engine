@@ -10,8 +10,13 @@ class Merchant
     @repo = repo
   end
 
-  def revenue
-    invoices.map { |invoice| invoice.revenue}.reduce(:+)
+  def revenue(date=nil)
+    date.nil? ? invoices.map { |invoice| invoice.revenue}.reduce(:+) : revenue_by_date(date)
+  end
+
+  def revenue_by_date(date)
+    invoices_for_date = invoices.select { |invoice| invoice.created_at[0..9] == date }
+    invoices_for_date.map { |invoice| invoice.revenue }.reduce(:+)
   end
 
   def items
@@ -20,6 +25,10 @@ class Merchant
 
   def invoices
     repo.invoices(id)
+  end
+
+  def quantity
+    invoices.map { |invoice| invoice.quantity}.reduce(:+)
   end
 
 end
