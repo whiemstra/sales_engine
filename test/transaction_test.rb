@@ -15,7 +15,7 @@ class TransactionTest < Minitest::Test
     se = SalesEngine.new
     se.startup
     transaction = se.transaction_repo.find_by_id(717)
-    assert_equal 609, transaction.invoice.id
+    assert_equal 609, transaction.invoice_id
   end
 
   def test_transaction_has_created_date_in_yyyymmdd_hhmmss_format
@@ -27,4 +27,12 @@ class TransactionTest < Minitest::Test
     transaction = Transaction.new(1, 2, 3, 4, 'success', '2012-03-27 14:54:15 UTC', '2012-03-27 14:58:15 UTC', 'parent repo')
     assert_equal "2012-03-27 14:58:15 UTC", transaction.updated_at
   end
+<<<<<<< HEAD
+=======
+
+  def test_returns_boolean_for_transaction_result
+    transaction = Transaction.new(1, 2, 3, 4, 'success', '2012-03-27 14:54:15 UTC', '2012-03-27 14:58:15 UTC', 'parent repo')
+    assert transaction.success?
+  end
+>>>>>>> brett
 end

@@ -15,4 +15,9 @@ class Transaction
   def invoice
     @repo.invoices(invoice_id)
   end
+
+  def success?
+    result == "success"
+  end
+
 end

@@ -10,6 +10,10 @@ class Merchant
     @repo = repo
   end
 
+  def revenue
+    invoices.map { |invoice| invoice.revenue}.reduce(:+)
+  end
+
   def items
     repo.items(id)
   end

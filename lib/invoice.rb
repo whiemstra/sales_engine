@@ -32,4 +32,12 @@ class Invoice
     @repo.merchant(merchant_id)
   end
 
+  def successful?
+    transactions.any? { |transaction| transaction.success? }
+  end
+
+  def revenue
+    invoice_items.map { |ii| ii.revenue }.reduce(:+) if successful?
+  end
+
 end
