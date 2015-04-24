@@ -56,13 +56,15 @@ class MerchantRepoTest < MiniTest::Test
   def test_it_can_find_by_created_at
     se = SalesEngine.new
     se.populate_merchant_repo
-    assert_equal "2012-03-27 14:53:59 UTC", se.merchant_repo.find_by_created_at("2012-03-27 14:53:59 UTC").created_at
+    date = se.merchant_repo.find_by_created_at("2012-03-27 14:53:59 UTC")
+    assert_equal "2012-03-27 14:53:59 UTC", date.created_at
   end
 
   def test_it_can_find_by_updated_at
     se = SalesEngine.new
     se.populate_merchant_repo
-    assert_equal "2012-03-27 14:54:09 UTC", se.merchant_repo.find_by_updated_at("2012-03-27 14:54:09 UTC").updated_at
+    date = se.merchant_repo.find_by_updated_at("2012-03-27 14:54:09 UTC")
+    assert_equal "2012-03-27 14:54:09 UTC", date.updated_at
   end
 
   def test_find_all_merchants_by_name
