@@ -81,7 +81,8 @@ class ItemsRepoTest < MiniTest::Test
   def test_find_all_by_description
     se = SalesEngine.new
     se.populate_items_repo
-    result = se.items_repo.find_all_by_description("Dolorem sed sit distinctio. Id ut in corrupti. Vel culpa recusandae numquam vel.")
+    description = "Dolorem sed sit distinctio. Id ut in corrupti. Vel culpa recusandae numquam vel."
+    result = se.items_repo.find_all_by_description(description)
     assert_equal 1, result.count
   end
 
@@ -112,4 +113,17 @@ class ItemsRepoTest < MiniTest::Test
     result = se.items_repo.find_all_by_updated_at("2012-03-27 14:54:09 UTC")
     assert_equal 180, result.count
   end
+
+  def test_returns_top_x_items_sold
+    se = SalesEngine.new
+    se.populate_transaction_repo
+    se.populate_invoice_repo
+    se.populate_invoice_item_repo
+    se.populate_items_repo
+    top_selling = se.items_repo.most_items(5)
+    assert_equal 5, top_selling.size
+    # assert_equal Merchant, top_kitties[0].class
+    # assert top_kitties[0], top_kitties.size
+  end
+
 end

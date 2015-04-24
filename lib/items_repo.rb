@@ -25,6 +25,10 @@ class ItemsRepo
     @engine.merchant_repo.find_by_id(merchant_id)
   end
 
+  def most_items(num)
+    @items.sort_by { |item| item.number_sold }.reverse.first(num)
+  end
+
   def all
     @items
   end

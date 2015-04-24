@@ -19,4 +19,12 @@ class Item
   def merchant
     @repo.merchant(merchant_id)
   end
+
+  def successful_invoice_items
+    invoice_items.select(&:successful?)
+  end
+
+  def number_sold
+    successful_invoice_items.map { |ii| ii.quantity }.reduce(:+)
+  end
 end
