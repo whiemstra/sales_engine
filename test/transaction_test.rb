@@ -27,12 +27,9 @@ class TransactionTest < Minitest::Test
     transaction = Transaction.new(1, 2, 3, 4, 'success', '2012-03-27 14:54:15 UTC', '2012-03-27 14:58:15 UTC', 'parent repo')
     assert_equal "2012-03-27 14:58:15 UTC", transaction.updated_at
   end
-<<<<<<< HEAD
-=======
 
   def test_returns_boolean_for_transaction_result
     transaction = Transaction.new(1, 2, 3, 4, 'success', '2012-03-27 14:54:15 UTC', '2012-03-27 14:58:15 UTC', 'parent repo')
     assert transaction.success?
   end
->>>>>>> brett
 end
