@@ -122,8 +122,7 @@ class ItemsRepoTest < MiniTest::Test
     se.populate_items_repo
     top_selling = se.items_repo.most_items(5)
     assert_equal 5, top_selling.size
-    # assert_equal Merchant, top_kitties[0].class
-    # assert top_kitties[0], top_kitties.size
+    assert_equal Item, top_selling[0].class
   end
 
 end
