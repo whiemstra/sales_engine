@@ -59,4 +59,21 @@ class MerchantRepo
     @merchants.select { |merchant| merchant.updated_at == date}
   end
 
+  def most_revenue(num)
+    winners = @merchants.map { |merchant| [merchant.revenue, merchant] }.sort.reverse[0..(num - 1)]
+    winners.map { |array| array[1] }
+  end
+
+  def revenue(date)
+    viable_merchants = @merchants.select do |merchant|
+      merchant.invoices.any? { |invoice| invoice.created_at[0..9] == date }
+    end
+    viable_merchants.map { |merchant| merchant.revenue(date) }.reduce(:+)
+  end
+
+  def most_items(num)
+    winners = @merchants.map { |merchant| [merchant.quantity, merchant.id] }.sort.reverse[0..(num - 1)]
+    winners.map { |array| array[1] }.map { |id| find_by_id(id) }
+  end
+
 end

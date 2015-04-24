@@ -27,7 +27,6 @@ class MerchantRepoTest < MiniTest::Test
     se = SalesEngine.new
     se.populate_merchant_repo
     assert_equal Merchant, se.merchant_repo.random.class
-
     merchant_one = se.merchant_repo.random
     merchant_two = se.merchant_repo.random
     100.times do
@@ -86,4 +85,38 @@ class MerchantRepoTest < MiniTest::Test
     result = se.merchant_repo.find_all_by_updated_at("2012-03-27 14:54:09 UTC")
     assert_equal 4, result.count
   end
+
+  def test_return_top_x_merchants_by_revenue
+    se = SalesEngine.new
+    se.populate_invoice_item_repo
+    se.populate_invoice_repo
+    se.populate_merchant_repo
+    se.populate_transaction_repo
+    top_dawgs = se.merchant_repo.most_revenue(3)
+    assert_equal 3, top_dawgs.size
+    assert_equal Merchant, top_dawgs[0].class
+    assert top_dawgs[0].revenue > top_dawgs[1].revenue
+  end
+
+  def test_returns_total_revenue_by_date_for_all_merchants
+    se = SalesEngine.new
+    se.populate_invoice_item_repo
+    se.populate_invoice_repo
+    se.populate_merchant_repo
+    se.populate_transaction_repo
+    assert_equal 190836805, se.merchant_repo.revenue('2012-03-27')
+  end
+
+  def test_returns_top_x_merchants_by_items_sold
+    se = SalesEngine.new
+    se.populate_invoice_item_repo
+    se.populate_invoice_repo
+    se.populate_merchant_repo
+    se.populate_transaction_repo
+    top_kitties = se.merchant_repo.most_items(4)
+    assert_equal 4, top_kitties.size
+    assert_equal Merchant, top_kitties[0].class
+    assert top_kitties[0], top_kitties.size
+  end
+
 end
