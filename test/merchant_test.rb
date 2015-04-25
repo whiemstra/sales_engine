@@ -70,4 +70,16 @@ class MerchantTest < Minitest::Test
     assert_equal Customer, customer.class
     assert_equal "Ramona", customer.first_name
   end
+
+  def test_find_customers_with_pending_invoices
+    se = SalesEngine.new
+    se.populate_merchant_repo
+    se.populate_invoice_repo
+    se.populate_transaction_repo
+    se.populate_customer_repo
+    merchant = se.merchant_repo.find_by_id(34)
+    unpaid_customers = merchant.customers_with_pending_invoices
+    assert_equal 2, unpaid_customers.size
+    assert_equal Customer, unpaid_customers[0].class
+  end
 end

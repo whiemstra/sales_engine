@@ -119,10 +119,10 @@ class MerchantRepoTest < MiniTest::Test
     assert top_kitties[0], top_kitties.size
   end
 
-  def test_fav_customer_by_their_id
+  def test_find_customer_by_their_id
     se = SalesEngine.new
     se.populate_customer_repo
-    fav_customer = se.merchant_repo.favorite_customer(2)
+    fav_customer = se.merchant_repo.find_customer(2)
     assert_equal "Cecelia", fav_customer.first_name
   end
 

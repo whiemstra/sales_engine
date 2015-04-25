@@ -76,7 +76,7 @@ class MerchantRepo
     winners.map { |array| array[1] }.map { |id| find_by_id(id) }
   end
 
-  def favorite_customer(customer_id)
+  def find_customer(customer_id)
     @engine.customer_repo.find_by_id(customer_id)
   end
 

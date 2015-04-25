@@ -10,12 +10,18 @@ class Merchant
     @repo = repo
   end
 
+  def customers_with_pending_invoices
+    unsuccessful_invoices = invoices.select { |invoice| invoice.successful? == false }
+    unique_cust_ids = unsuccessful_invoices.map { |invoice| invoice.customer_id }.uniq
+    unique_cust_ids.map { |id| @repo.find_customer(id) }
+  end
+
   def favorite_customer
     success_invoices = invoices.select { |invoice| invoice.successful?}
     cust_id_hash = success_invoices.group_by {|invoice| invoice.customer_id}
     cust_id_array = cust_id_hash.map { |key, value| [value.size,key] }
     winner_id = cust_id_array.sort[0][1]
-    @repo.favorite_customer(winner_id)
+    @repo.find_customer(winner_id)
   end
 
   def revenue(date=nil)
