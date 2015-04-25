@@ -36,6 +36,10 @@ class InvoiceRepo
     @engine.merchant_repo.find_by_id(merchant_id)
   end
 
+  def new_id
+    @invoices.last.id + 1
+  end
+
   def all
     @invoices
   end

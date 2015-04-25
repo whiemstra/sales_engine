@@ -94,4 +94,17 @@ class InvoiceRepoTest < MiniTest::Test
     assert_equal 1, se.invoice_repo.find_all_by_updated_at('2012-03-12 03:54:10 UTC').size
   end
 
+  def test_create_the_next_id_for_a_new_invoice
+    se = SalesEngine.new
+    se.populate_invoice_repo
+    assert_equal 4844, se.invoice_repo.new_id
+  end
+
+  def test_create_new_invoices
+    se = SalesEngine.new
+    se.startup
+    se.invoice_repo.create(customer: "Joey Ondricka", merchant: "Willms and Sons", status: "shipped", items: [])
+
+  end
+
 end

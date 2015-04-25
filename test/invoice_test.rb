@@ -13,7 +13,8 @@ class InvoiceTest < Minitest::Test
 
   def test_can_find_associated_transactions
     se = SalesEngine.new
-    se.startup
+    se.populate_invoice_repo
+    se.populate_transaction_repo
     invoice = se.invoice_repo.find_by_id(12)
     assert_equal 3, invoice.transactions.size
     assert_equal Transaction, invoice.transactions[0].class
