@@ -80,5 +80,15 @@ class ItemTest < Minitest::Test
     assert_equal 0, item_with_no_sold.revenue
   end
 
+  def test_best_day_returns_day_with_most_sales
+    se = SalesEngine.new
+    se.populate_transaction_repo
+    se.populate_invoice_repo
+    se.populate_invoice_item_repo
+    se.populate_items_repo
+    item = se.items_repo.find_by_id(600)
+    assert_equal '2012-03-26', item.best_day
+  end
+
 end
 
