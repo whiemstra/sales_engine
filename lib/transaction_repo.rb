@@ -39,10 +39,6 @@ class TransactionRepo
     @transactions.detect { |transaction| transaction.credit_card_number == cc_num }
   end
 
-  def find_by_cc_exp_date(cc_exp_date)
-    @transactions.detect { |transaction| transaction.credit_card_expiration_date == cc_exp_date }
-  end
-
   def find_by_result(result)
     @transactions.detect { |transaction| transaction.result == result }
   end
@@ -61,10 +57,6 @@ class TransactionRepo
 
   def find_all_by_cc_num(cc_num)
     @transactions.select { |transaction| transaction.credit_card_number == cc_num }
-  end
-
-  def find_all_by_cc_exp_date(cc_exp_date)
-    @transactions.select { |transaction| transaction.credit_card_expiration_date == cc_exp_date }
   end
 
   def find_all_by_result(result)
