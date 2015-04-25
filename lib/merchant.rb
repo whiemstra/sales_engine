@@ -10,6 +10,14 @@ class Merchant
     @repo = repo
   end
 
+  def favorite_customer
+    success_invoices = invoices.select { |invoice| invoice.successful?}
+    cust_id_hash = success_invoices.group_by {|invoice| invoice.customer_id}
+    cust_id_array = cust_id_hash.map { |key, value| [value.size,key] }
+    winner_id = cust_id_array.sort[0][1]
+    @repo.favorite_customer(winner_id)
+  end
+
   def revenue(date=nil)
     date.nil? ? invoices.map { |invoice| invoice.revenue}.reduce(:+) : revenue_by_date(date)
   end
