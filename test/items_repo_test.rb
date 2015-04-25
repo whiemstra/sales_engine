@@ -130,6 +130,7 @@ class ItemsRepoTest < MiniTest::Test
     se.populate_transaction_repo
     se.populate_invoice_repo
     se.populate_invoice_item_repo
+    se.populate_items_repo
     top_selling = se.items_repo.most_revenue(2)
     assert_equal 2, top_selling.size
     # assert_equal Item, top_selling[0].class

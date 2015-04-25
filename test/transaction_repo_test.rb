@@ -47,15 +47,7 @@ class TransactionRepoTest < MiniTest::Test
     assert_equal 3866, se.transaction_repo.find_by_cc_num(4450739410040771).id
   end
 
-  def test_find_a_transaction_by_cc_num_exp_date
-    skip
-    se = SalesEngine.new
-    se.populate_transaction_repo
-    assert_equal "????????????????????????????", se.transaction_repo.find_by_cc_exp_date("??????????????????????????????").id
-  end
-
   def test_find_a_transaction_by_result
-    skip
     se = SalesEngine.new
     se.populate_transaction_repo
     assert_equal 1, se.transaction_repo.find_by_result("success").id
@@ -84,14 +76,6 @@ class TransactionRepoTest < MiniTest::Test
     se = SalesEngine.new
     se.populate_transaction_repo
     result = se.transaction_repo.find_all_by_cc_num(4140149827486249)
-    assert_equal 1, result.count
-  end
-
-  def test_find_all_transactions_by_cc_exp_date
-    skip
-    se = SalesEngine.new
-    se.populate_transaction_repo
-    result = se.transaction_repo.find_all_by_cc_exp_date()
     assert_equal 1, result.count
   end
 
