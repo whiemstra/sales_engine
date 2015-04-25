@@ -24,5 +24,9 @@ class InvoiceItem
   def revenue
     @unit_price * @quantity
   end
+
+  def successful?
+    invoice.successful?
+  end
   
 end

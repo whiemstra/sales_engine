@@ -40,5 +40,45 @@ class ItemTest < Minitest::Test
     item = se.items_repo.find_by_id(18)
     assert_equal "Klein, Rempel and Jones", item.merchant.name
   end
+
+  def test_find_successful_invoice_items
+    se = SalesEngine.new
+    se.populate_transaction_repo
+    se.populate_invoice_repo
+    se.populate_invoice_item_repo
+    se.populate_items_repo
+    item = se.items_repo.find_by_id(1)
+    list_of_invoice_items = item.successful_invoice_items
+    refute list_of_invoice_items.include?(nil)
+    assert_equal 23, list_of_invoice_items.size
+    assert_equal InvoiceItem, list_of_invoice_items[0].class
+  end
+
+  def test_determines_num_of_items_successfully_sold
+    se = SalesEngine.new
+    se.populate_transaction_repo
+    se.populate_invoice_repo
+    se.populate_invoice_item_repo
+    se.populate_items_repo
+    item = se.items_repo.find_by_id(1)
+    assert_equal 109, item.number_sold
+
+    item_not_sold = se.items_repo.find_by_id(737)
+    assert_equal 0, item_not_sold.number_sold
+  end
+
+  def test_determines_item_revenue
+    se = SalesEngine.new
+    se.populate_transaction_repo
+    se.populate_invoice_repo
+    se.populate_invoice_item_repo
+    se.populate_items_repo
+    item = se.items_repo.find_by_id(1)
+    assert_equal 8186663, item.revenue
+
+    item_with_no_sold = se.items_repo.find_by_id(737)
+    assert_equal 0, item_with_no_sold.revenue
+  end
+
 end
 

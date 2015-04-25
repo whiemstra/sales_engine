@@ -11,10 +11,20 @@ class ItemsRepo
 
   def populate(csv_object)
     csv_object.each do |row|
-      @items << Item.new(row[:id].to_i, row[:name], row[:description],
-                         row[:unit_price].to_i, row[:merchant_id].to_i,
-                         row[:created_at], row[:updated_at], self)
+      @items << Item.new(row[:id].to_i, row[:name], row[:description], row[:unit_price].to_i, row[:merchant_id].to_i, row[:created_at], row[:updated_at], self)
     end
+  end
+
+  def most_revenue(num)
+    revenue_for_items = @items.map { |item| item.revenue }
+    sorted_revenue = revenue_for_items.sort
+    reversed_sorted_rev = sorted_revenue.reverse[0..(num - 1)]
+    reversed_sorted_rev
+  end
+
+  def most_items(num)
+    top_items = @items.map { |item| [item.number_sold, item.id] }.reverse[0..(num - 1)]
+    top_items.map { |array| array[1] }.map { |id| find_by_id(id) }
   end
 
   def invoice_items(id)

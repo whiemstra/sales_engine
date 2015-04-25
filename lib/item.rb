@@ -19,4 +19,29 @@ class Item
   def merchant
     @repo.merchant(merchant_id)
   end
+
+  def successful_invoice_items
+    invoice_items.select(&:successful?)
+  end
+
+  def number_sold
+    number_sold = successful_invoice_items.map { |ii| ii.quantity }.reduce(:+)
+    if number_sold.nil?
+      0
+    else
+      number_sold
+    end
+  end
+
+  def revenue
+    # TODO can you just do this? `number_sold * unit_price`
+    #number_sold * unit_price
+    total_revenue = successful_invoice_items.map { |ii| ii.revenue}.reduce(:+)
+    if total_revenue.nil?
+      0
+    else
+      total_revenue
+    end
+  end
+
 end
