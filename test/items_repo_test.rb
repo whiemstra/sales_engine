@@ -125,4 +125,14 @@ class ItemsRepoTest < MiniTest::Test
     assert_equal Item, top_selling[0].class
   end
 
+  def test_determines_revenue_for_top_x_items
+    se = SalesEngine.new
+    se.populate_transaction_repo
+    se.populate_invoice_repo
+    se.populate_invoice_item_repo
+    top_selling = se.items_repo.most_revenue(2)
+    assert_equal 2, top_selling.size
+    # assert_equal Item, top_selling[0].class
+  end
+
 end

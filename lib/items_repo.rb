@@ -17,17 +17,22 @@ class ItemsRepo
     end
   end
 
+  def most_revenue(num)
+    @items.map { |item| item.revenue }.sort.reverse[0..(num - 1)]
+    # best_selling.map { |array| array[1] }
+  end
+
+  def most_items(num)
+    top_items = @items.map { |item| [item.number_sold, item.id] }.reverse[0..(num - 1)]
+    top_items.map { |array| array[1] }.map { |id| find_by_id(id) }
+  end
+
   def invoice_items(id)
     @engine.invoice_item_repo.find_all_by_item_id(id)
   end
 
   def merchant(merchant_id)
     @engine.merchant_repo.find_by_id(merchant_id)
-  end
-
-  def most_items(num)
-    top_items = @items.map { |item| [item.number_sold, item.id] }.reverse[0..(num - 1)]
-    top_items.map { |array| array[1] }.map { |id| find_by_id(id) }
   end
 
   def all

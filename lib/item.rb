@@ -27,4 +27,9 @@ class Item
   def number_sold
     successful_invoice_items.map { |ii| ii.quantity }.reduce(:+)
   end
+
+  def revenue
+    successful_invoice_items.map { |ii| ii.revenue}.reduce(:+)
+  end
+
 end

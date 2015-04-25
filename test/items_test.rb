@@ -63,5 +63,6 @@ class ItemTest < Minitest::Test
     item = se.items_repo.find_by_id(1)
     assert_equal 109, item.number_sold
   end
+
 end
 
