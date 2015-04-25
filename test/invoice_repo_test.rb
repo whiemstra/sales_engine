@@ -100,11 +100,11 @@ class InvoiceRepoTest < MiniTest::Test
     assert_equal 4844, se.invoice_repo.new_id
   end
 
-  def test_create_new_invoices
-    se = SalesEngine.new
-    se.startup
-    se.invoice_repo.create(customer: "Joey Ondricka", merchant: "Willms and Sons", status: "shipped", items: [])
-
-  end
+  # def test_create_new_invoices
+  #   se = SalesEngine.new
+  #   se.startup
+  #   se.invoice_repo.create(customer: "Joey Ondricka", merchant: "Willms and Sons", status: "shipped", items: [])
+  #
+  # end
 
 end

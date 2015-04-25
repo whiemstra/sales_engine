@@ -13,10 +13,22 @@ class CustomerTest < Minitest::Test
 
   def test_can_find_associated_invoice_items
     se = SalesEngine.new
-    se.startup
+    se.populate_customer_repo
+    se.populate_invoice_repo
+    se.populate_invoice_item_repo
     customer = se.customer_repo.find_by_id(3)
     assert_equal 4, customer.invoices.size
     assert_equal Invoice, customer.invoices[0].class
+  end
+
+  def test_find_associated_transactions
+    se = SalesEngine.new
+    se.populate_customer_repo
+    se.populate_invoice_repo
+    se.populate_transaction_repo
+    customer = se.customer_repo.find_by_id(3)
+    assert_equal Transaction, customer.transactions[0].class
+    assert_equal 7, customer.transactions.size
   end
 end
 

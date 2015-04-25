@@ -16,4 +16,8 @@ class Customer
     @repo.invoices(id)
   end
 
+  def transactions
+    invoices.map { |invoice| invoice.transactions}.flatten
+  end
+
 end
