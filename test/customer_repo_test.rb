@@ -89,4 +89,10 @@ class CustomerRepoTest < MiniTest::Test
     assert_equal 'Kozey Group', se.customer_repo.find_merchant(12).name
   end
 
+  def test_find_customer_by_full_name
+    se = SalesEngine.new
+    se.populate_customer_repo
+    assert_equal 'Frami', se.customer_repo.find_by_full_name('Ashly Frami').last_name
+  end
+
 end

@@ -40,6 +40,14 @@ class InvoiceRepo
     @invoices.last.id + 1
   end
 
+  def create(customer:, merchant:, status:, items:)
+    id = new_id
+    date = Time.now.strftime('%Y-%m-%d %H:%M:%S UTC')
+    cust_obj = @engine.customer_repo.find_by_full_name(customer)
+    merch_obj = @engine.merchant_repo.find_by_name(merchant)
+
+  end
+
   def all
     @invoices
   end

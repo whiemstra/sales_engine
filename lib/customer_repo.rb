@@ -43,6 +43,12 @@ class CustomerRepo
     @customers.detect { |customer| customer.last_name == last_name }
   end
 
+  def find_by_full_name(full_name)
+    name = full_name.split
+    customer = find_all_by_first_name(name[0]) & find_all_by_last_name(name[1])
+    customer[0]
+  end
+
   def find_by_created_at(created_at)
     @customers.detect { |customer| customer.created_at == created_at }
   end
