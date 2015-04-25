@@ -30,5 +30,15 @@ class CustomerTest < Minitest::Test
     assert_equal Transaction, customer.transactions[0].class
     assert_equal 7, customer.transactions.size
   end
+
+  def test_find_favorite_merchant
+    se = SalesEngine.new
+    se.populate_customer_repo
+    se.populate_invoice_repo
+    se.populate_transaction_repo
+    se.populate_merchant_repo
+    customer = se.customer_repo.find_by_id(4)
+    assert_equal Merchant, customer.favorite_merchant.class
+  end
 end
 

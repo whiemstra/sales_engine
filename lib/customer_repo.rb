@@ -19,6 +19,10 @@ class CustomerRepo
     @engine.invoice_repo.find_all_by_customer_id(id)
   end
 
+  def find_merchant(merchant_id)
+    @engine.merchant_repo.find_by_id(merchant_id)
+  end
+
   def all
     @customers
   end

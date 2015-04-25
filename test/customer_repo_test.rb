@@ -83,4 +83,10 @@ class CustomerRepoTest < MiniTest::Test
     assert_equal 3, se.customer_repo.find_all_by_updated_at("2012-03-27 14:54:14 UTC").size
   end
 
+  def test_find_merchant_by_id
+    se = SalesEngine.new
+    se.populate_merchant_repo
+    assert_equal 'Kozey Group', se.customer_repo.find_merchant(12).name
+  end
+
 end
