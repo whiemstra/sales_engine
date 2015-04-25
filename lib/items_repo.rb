@@ -11,27 +11,15 @@ class ItemsRepo
 
   def populate(csv_object)
     csv_object.each do |row|
-      @items << Item.new(row[:id].to_i, row[:name], row[:description],
-                         row[:unit_price].to_i, row[:merchant_id].to_i,
-                         row[:created_at], row[:updated_at], self)
+      @items << Item.new(row[:id].to_i, row[:name], row[:description], row[:unit_price].to_i, row[:merchant_id].to_i, row[:created_at], row[:updated_at], self)
     end
   end
 
   def most_revenue(num)
     revenue_for_items = @items.map { |item| item.revenue }
-    # @items.each do |item|
-    #   if item.revenue.nil?
-    #     puts [item.id, item.number_sold, item.unit_price].join(', ')
-    #   end
-    # end
-    puts "revenue_for_items is #{revenue_for_items.inspect}" # TODO somehow getting nil mixed in
-
     sorted_revenue = revenue_for_items.sort
-    puts "sorted_revenue is #{sorted_revenue.inspect}"
     reversed_sorted_rev = sorted_revenue.reverse[0..(num - 1)]
-    puts "reversed_sorted_rev is #{reversed_sorted_rev.inspect}"
     reversed_sorted_rev
-    # best_selling.map { |array| array[1] }
   end
 
   def most_items(num)

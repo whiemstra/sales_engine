@@ -63,8 +63,8 @@ class ItemTest < Minitest::Test
     item = se.items_repo.find_by_id(1)
     assert_equal 109, item.number_sold
 
-    item_with_no_sold = se.items_repo.find_by_id(737)
-    assert_equal 0, item_with_no_sold.number_sold
+    item_not_sold = se.items_repo.find_by_id(737)
+    assert_equal 0, item_not_sold.number_sold
   end
 
   def test_determines_item_revenue
@@ -78,7 +78,6 @@ class ItemTest < Minitest::Test
 
     item_with_no_sold = se.items_repo.find_by_id(737)
     assert_equal 0, item_with_no_sold.revenue
-    #item = se.items_repo.find_by_id(...)
   end
 
 end
