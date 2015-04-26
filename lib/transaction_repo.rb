@@ -19,6 +19,14 @@ class TransactionRepo
     @engine.invoice_repo.find_by_id(invoice_id)
   end
 
+  def new_id
+    @transactions.last.id + 1
+  end
+
+  def create(credit_card_number, credit_card_expiration, result, invoice_id, date)
+    @transactions << Transaction.new(new_id, invoice_id, credit_card_number, credit_card_expiration, result, date, date, self)
+  end
+
   def all
     @transactions
   end

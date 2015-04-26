@@ -80,4 +80,15 @@ class InvoiceTest < Minitest::Test
     assert_equal 47, invoice.quantity
   end
 
+  def test_charge_creates_new_transaction
+    se = SalesEngine.new
+    se.populate_transaction_repo
+    se.populate_invoice_repo
+    invoice = se.invoice_repo.invoices.first
+    invoice.charge(credit_card_number: '4640960137749750', credit_card_expiration: '10/16', result: 'success')
+    transaction = se.transaction_repo.transactions.last
+    assert_equal 5596, transaction.id
+    assert_equal 1, transaction.invoice_id
+    assert transaction.success?
+  end
 end

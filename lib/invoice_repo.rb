@@ -49,6 +49,10 @@ class InvoiceRepo
     @invoices << Invoice.new(id, cust_obj.id, merch_obj.id, status, date, date, self)
   end
 
+  def charge(credit_card_number, credit_card_expiration, result, id, date)
+    @engine.transaction_repo.create(credit_card_number, credit_card_expiration, result, id, date)
+  end
+
   def all
     @invoices
   end

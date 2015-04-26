@@ -116,4 +116,14 @@ class InvoiceRepoTest < MiniTest::Test
     assert_equal 21689, se.invoice_item_repo.invoice_items.last.id
   end
 
+  def test_charge_method
+    se = SalesEngine.new
+    se.populate_transaction_repo
+    se.invoice_repo.charge('4640960137749750', '10/16', 'success', 23, "2012-03-27 14:54:09 UTC")
+    transaction = se.transaction_repo.transactions.last
+    assert_equal 5596, transaction.id
+    assert_equal 23, transaction.invoice_id
+    assert transaction.success?
+  end
+
 end
