@@ -94,4 +94,18 @@ class InvoiceItemRepoTest < MiniTest::Test
     assert_equal 15, se.invoice_item_repo.find_all_by_updated_at('2012-03-27 14:54:09 UTC').size
   end
 
+  def test_it_has_created_a_new_invoice_items
+    se = SalesEngine.new
+    se.populate_invoice_item_repo
+    se.populate_items_repo
+    se.invoice_item_repo.create(['Item Provident At', 'Item Autem Minima', 'Item Provident At'], 4, '2012-08-27 14:54:09 UTC')
+    first_ii = se.invoice_item_repo.invoice_items[-2]
+    second_ii = se.invoice_item_repo.invoice_items.last
+    assert_equal 6, first_ii.item_id
+    assert_equal 2, first_ii.quantity
+    assert_equal 2, second_ii.item_id
+    assert_equal 1, second_ii.quantity
+    assert_equal 21688, first_ii.id
+    assert_equal 21689, second_ii.id
+  end
 end

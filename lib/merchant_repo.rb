@@ -72,8 +72,7 @@ class MerchantRepo
   end
 
   def most_items(num)
-    winners = @merchants.map { |merchant| [merchant.quantity, merchant.id] }.sort.reverse[0..(num - 1)]
-    winners.map { |array| array[1] }.map { |id| find_by_id(id) }
+    @merchants.sort_by { |merchant| -merchant.quantity}.take(num)
   end
 
   def find_customer(customer_id)

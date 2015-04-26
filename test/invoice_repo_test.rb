@@ -100,11 +100,20 @@ class InvoiceRepoTest < MiniTest::Test
     assert_equal 4844, se.invoice_repo.new_id
   end
 
-  # def test_create_new_invoices
-  #   se = SalesEngine.new
-  #   se.startup
-  #   se.invoice_repo.create(customer: "Joey Ondricka", merchant: "Willms and Sons", status: "shipped", items: [])
-  #
-  # end
+  def test_create_new_invoices
+    se = SalesEngine.new
+    se.populate_merchant_repo
+    se.populate_customer_repo
+    se.populate_invoice_repo
+    se.populate_invoice_item_repo
+    se.populate_items_repo
+    se.invoice_repo.create(customer: "Joey Ondricka", merchant: "Willms and Sons", status: "shipped", items: ['Item Qui Esse', 'Item Nemo Facere'])
+    invoice = se.invoice_repo.invoices.last
+    assert_equal 1, invoice.customer_id
+    assert_equal 3, invoice.merchant_id
+    assert_equal 'shipped', invoice.status
+    assert_equal Time.now.strftime('%Y-%m-%d %H:%M:%S UTC'), invoice.created_at
+    assert_equal 21689, se.invoice_item_repo.invoice_items.last.id
+  end
 
 end

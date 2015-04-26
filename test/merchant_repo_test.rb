@@ -114,9 +114,8 @@ class MerchantRepoTest < MiniTest::Test
     se.populate_merchant_repo
     se.populate_transaction_repo
     top_kitties = se.merchant_repo.most_items(4)
+    assert_equal [89, 12, 22, 98], top_kitties.map(&:id)
     assert_equal 4, top_kitties.size
-    assert_equal Merchant, top_kitties[0].class
-    assert top_kitties[0], top_kitties.size
   end
 
   def test_find_customer_by_their_id

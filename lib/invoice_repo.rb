@@ -45,7 +45,8 @@ class InvoiceRepo
     date = Time.now.strftime('%Y-%m-%d %H:%M:%S UTC')
     cust_obj = @engine.customer_repo.find_by_full_name(customer)
     merch_obj = @engine.merchant_repo.find_by_name(merchant)
-
+    @engine.invoice_item_repo.create(items, id, date)
+    @invoices << Invoice.new(id, cust_obj.id, merch_obj.id, status, date, date, self)
   end
 
   def all
