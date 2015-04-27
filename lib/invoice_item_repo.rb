@@ -23,10 +23,9 @@ class InvoiceItemRepo
   end
 
   def create(items, invoice_id, date)
-    item_objects = items.map { |item_name| @engine.items_repo.find_by_name(item_name) }
-    grouped_items = item_objects.group_by { |item| item }
-    item_and_quantity = grouped_items.map { |item, items| [item, items.size] }
-    item_and_quantity.each do |item, quantity|
+    item_objs = items.map { |item_name| @engine.items_repo.find_by_name(item_name) }
+    grouped = item_objs.group_by { |item| item }
+    grouped.map { |item, items| [item, items.size] }.each do |item, quantity|
       @invoice_items << InvoiceItem.new(new_id, item.id, invoice_id, quantity, item.unit_price, date, date, self)
     end
   end
