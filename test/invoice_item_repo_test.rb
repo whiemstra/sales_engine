@@ -79,7 +79,7 @@ class InvoiceItemRepoTest < MiniTest::Test
   def test_find_all_invoice_items_by_unit_price
     se = SalesEngine.new('./data')
     se.populate_invoice_item_repo
-    assert_equal 11, se.invoice_item_repository.find_all_by_unit_price(2196).size
+    assert_equal 11, se.invoice_item_repository.find_all_by_unit_price(2190).size
   end
 
   def test_find_all_invoice_items_by_created_at
