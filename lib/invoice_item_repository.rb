@@ -27,7 +27,6 @@ class InvoiceItemRepository
   end
 
   def create(items, invoice_id, date)
-    # item_objects = items.map { |item_name| @engine.item_repository.find_by_name(item_name) }
     grouped_items = items.group_by { |item| item }
     item_and_quantity = grouped_items.map { |item, items| [item, items.size] }
     item_and_quantity.each do |item, quantity|
