@@ -14,25 +14,35 @@ class Merchant
   end
 
   def customers_with_pending_invoices
-    unsuccessful_invoices = invoices.select { |invoice| invoice.successful? == false }
-    unique_cust_ids = unsuccessful_invoices.map { |invoice| invoice.customer_id }.uniq
-    unique_cust_ids.map { |id| @repo.find_customer(id) }
+    success_invoices = invoices.select do |invoice|
+      invoice.successful? == false
+    end
+    uniq_cust_ids = success_invoices.map { |invoice| invoice.customer_id }.uniq
+    uniq_cust_ids.map { |id| @repo.find_customer(id) }
   end
 
   def favorite_customer
     success_invoices = invoices.select { |invoice| invoice.successful?}
     cust_id_hash = success_invoices.group_by {|invoice| invoice.customer_id}
-    cust_id_array = cust_id_hash.map { |cust_id, invoices| [invoices.size, cust_id] }
+    cust_id_array = cust_id_hash.map do |cust_id, invoices|
+      [invoices.size, cust_id]
+    end
     winner_id = cust_id_array.sort[-1][1]
     @repo.find_customer(winner_id)
   end
 
   def revenue(date=nil)
-    date.nil? ? invoices.map { |invoice| invoice.revenue}.reduce(:+) : revenue_by_date(date)
+    if date.nil?
+      invoices.map { |invoice| invoice.revenue}.reduce(:+)
+    else
+      revenue_by_date(date)
+    end
   end
 
   def revenue_by_date(date)
-    invoices_for_date = invoices.select { |invoice| Date.parse(invoice.created_at[0..9]) == date }
+    invoices_for_date = invoices.select do |invoice|
+      Date.parse(invoice.created_at[0..9]) == date
+    end
     invoices_for_date.map { |invoice| invoice.revenue }.reduce(:+)
   end
 

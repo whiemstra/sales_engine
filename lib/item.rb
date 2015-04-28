@@ -3,9 +3,17 @@ require 'bigdecimal/util'
 
 
 class Item
-  attr_reader :id, :name, :description, :unit_price, :merchant_id, :created_at, :updated_at,:repo
+  attr_reader :id,
+              :name,
+              :description,
+              :unit_price,
+              :merchant_id,
+              :created_at,
+              :updated_at,:repo
 
-  def initialize(id, name, description, unit_price, merchant_id, created_at, updated_at, repo)
+  def initialize(id, name, description,
+                 unit_price, merchant_id,
+                 created_at, updated_at, repo)
     @id = id
     @name = name
     @description = description
@@ -34,9 +42,10 @@ class Item
 
   def best_day
     dated_hash = successful_invoice_items.group_by { |ii| ii.invoice.created_at}
-    result = dated_hash.map { |date, iis| [quantify(iis), Date.new(date[0..3].to_i, date[5..6].to_i, date[8..9].to_i)] }
+    result = dated_hash.map do |date, iis|
+      [quantify(iis), Date.new(date[0..3].to_i, date[5..6].to_i, date[8..9].to_i)]
+    end
     result.sort[-1][1]
-    # date.strftime('%Y-%m-%d')
   end
 
   def number_sold

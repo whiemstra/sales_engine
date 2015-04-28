@@ -18,7 +18,13 @@ class MerchantRepository
 
   def populate(csv_object)
     csv_object.each do |row|
-      @merchants << Merchant.new(row[:id].to_i, row[:name], row[:created_at], row[:updated_at], self)
+      @merchants << Merchant.new(
+        row[:id].to_i,
+        row[:name],
+        row[:created_at],
+        row[:updated_at],
+        self
+      )
     end
   end
 
@@ -67,13 +73,14 @@ class MerchantRepository
   end
 
   def most_revenue(num)
-    winners = @merchants.map { |merchant| [merchant.revenue, merchant] }.sort.reverse[0..(num - 1)]
-    winners.map { |array| array[1] }
+    @merchants.sort_by { |merchant| -merchant.revenue}.take(num)
   end
 
   def revenue(date)
     viable_merchants = @merchants.select do |merchant|
-      merchant.invoices.any? { |invoice| Date.parse(invoice.created_at[0..9]) == date }
+      merchant.invoices.any? do |invoice|
+        Date.parse(invoice.created_at[0..9]) == date
+      end
     end
     viable_merchants.map { |merchant| merchant.revenue(date) }.reduce(:+)
   end
