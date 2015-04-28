@@ -107,7 +107,11 @@ class InvoiceRepoTest < MiniTest::Test
     se.populate_invoice_repo
     se.populate_invoice_item_repo
     se.populate_item_repo
-    se.invoice_repository.create(customer: "Joey Ondricka", merchant: "Willms and Sons", items: ['Item Qui Esse', 'Item Nemo Facere'])
+    customer_ex = se.customer_repository.find_by_full_name("Joey Ondricka")
+    merchant_ex = se.merchant_repository.find_by_name("Willms and Sons")
+    item1 = se.item_repository.find_by_name('Item Qui Esse')
+    item2 = se.item_repository.find_by_name('Item Nemo Facere')
+    se.invoice_repository.create(customer: customer_ex, merchant: merchant_ex, items: [item1, item2])
     invoice = se.invoice_repository.invoices.last
     assert_equal 1, invoice.customer_id
     assert_equal 3, invoice.merchant_id
