@@ -1,12 +1,16 @@
 require 'csv'
 require_relative 'invoice_item'
 
-class InvoiceItemRepo
+class InvoiceItemRepository
   attr_reader :engine, :invoice_items
 
   def initialize(engine)
     @engine = engine
     @invoice_items = []
+  end
+
+  def inspect
+    "#<#{self.class} #{@invoice_items.size} rows>"
   end
 
   def populate(csv_object)
@@ -26,20 +30,28 @@ class InvoiceItemRepo
   end
 
   def create(items, invoice_id, date)
+<<<<<<< HEAD:lib/invoice_item_repo.rb
     item_objs = items.map { |item_name| @engine.items_repo.find_by_name(item_name) }
     grouped = item_objs.group_by { |item| item }
     grouped.map { |item, items| [item, items.size] }.each do |item, quantity|
       @invoice_items << InvoiceItem.new(new_id, item.id, invoice_id, quantity,
                                         item.unit_price, date, date, self)
+=======
+    # item_objects = items.map { |item_name| @engine.item_repository.find_by_name(item_name) }
+    grouped_items = items.group_by { |item| item }
+    item_and_quantity = grouped_items.map { |item, items| [item, items.size] }
+    item_and_quantity.each do |item, quantity|
+      @invoice_items << InvoiceItem.new(new_id, item.id, invoice_id, quantity, item.unit_price, date, date, self)
+>>>>>>> fac0c91bb09e1081feed33b55e4e1b4df2aafca2:lib/invoice_item_repository.rb
     end
   end
 
   def invoice(invoice_id)
-    @engine.invoice_repo.find_by_id(invoice_id)
+    @engine.invoice_repository.find_by_id(invoice_id)
   end
 
   def item(item_id)
-    @engine.items_repo.find_by_id(item_id)
+    @engine.item_repository.find_by_id(item_id)
   end
 
   def all

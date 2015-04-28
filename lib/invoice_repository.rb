@@ -1,12 +1,16 @@
 require 'csv'
 require_relative 'invoice'
 
-class InvoiceRepo
+class InvoiceRepository
   attr_reader :engine, :invoices
 
   def initialize(engine)
     @engine = engine
     @invoices = []
+  end
+
+  def inspect
+    "#<#{self.class} #{@invoices.size} rows>"
   end
 
   def populate(csv_object)
@@ -16,41 +20,43 @@ class InvoiceRepo
   end
 
   def transactions(id)
-    @engine.transaction_repo.find_all_by_invoice_id(id)
+    @engine.transaction_repository.find_all_by_invoice_id(id)
   end
 
   def invoice_items(id)
-    @engine.invoice_item_repo.find_all_by_invoice_id(id)
+    @engine.invoice_item_repository.find_all_by_invoice_id(id)
   end
 
   def items(id)
     item_id_list = invoice_items(id).map { |ii| ii.item_id }
-    item_id_list.collect { |id| @engine.items_repo.find_by_id(id) }
+    item_id_list.collect { |id| @engine.item_repository.find_by_id(id) }
   end
 
   def customer(customer_id)
-    @engine.customer_repo.find_by_id(customer_id)
+    @engine.customer_repository.find_by_id(customer_id)
   end
 
   def merchant(merchant_id)
-    @engine.merchant_repo.find_by_id(merchant_id)
+    @engine.merchant_repository.find_by_id(merchant_id)
   end
 
   def new_id
     @invoices.last.id + 1
   end
 
-  def create(customer:, merchant:, status:, items:)
+  def create(customer:, merchant:, items:)
     id = new_id
     date = Time.now.strftime('%Y-%m-%d %H:%M:%S UTC')
-    cust_obj = @engine.customer_repo.find_by_full_name(customer)
-    merch_obj = @engine.merchant_repo.find_by_name(merchant)
-    @engine.invoice_item_repo.create(items, id, date)
-    @invoices << Invoice.new(id, cust_obj.id, merch_obj.id, status, date, date, self)
+    # cust_obj = @engine.customer_repository.find_by_full_name(customer)
+    # merch_obj = @engine.merchant_repository.find_by_name(merchant)
+    @engine.invoice_item_repository.create(items, id, date)
+    new_invoice = Invoice.new(id, customer.id, merchant.id, 'shipped', date, date, self)
+    @invoices << new_invoice
+    new_invoice
   end
 
   def charge(credit_card_number, credit_card_expiration, result, id, date)
-    @engine.transaction_repo.create(credit_card_number, credit_card_expiration, result, id, date)
+    @engine.transaction_repository.create(credit_card_number, credit_card_expiration, result, id, date)
   end
 
   def all

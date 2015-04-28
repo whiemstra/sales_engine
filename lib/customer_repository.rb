@@ -1,12 +1,16 @@
 require 'csv'
 require_relative 'customer'
 
-class CustomerRepo
+class CustomerRepository
   attr_reader :engine, :customers
 
   def initialize(engine)
     @engine = engine
     @customers = []
+  end
+
+  def inspect
+    "#<#{self.class} #{@customers.size} rows>"
   end
 
   def populate(csv_object)
@@ -16,11 +20,11 @@ class CustomerRepo
   end
 
   def invoices(id)
-    @engine.invoice_repo.find_all_by_customer_id(id)
+    @engine.invoice_repository.find_all_by_customer_id(id)
   end
 
   def find_merchant(merchant_id)
-    @engine.merchant_repo.find_by_id(merchant_id)
+    @engine.merchant_repository.find_by_id(merchant_id)
   end
 
   def all

@@ -1,3 +1,6 @@
+require 'bigdecimal'
+require 'bigdecimal/util'
+
 class Invoice
 
   attr_reader :id, :customer_id, :merchant_id, :status, :created_at, :updated_at, :repo
@@ -16,9 +19,9 @@ class Invoice
     @repo.transactions(id)
   end
 
-  def charge(credit_card_number:, credit_card_expiration:, result:)
+  def charge(credit_card_number:, credit_card_expiration_date:, result:)
     date = Time.now.strftime('%Y-%m-%d %H:%M:%S UTC')
-    @repo.charge(credit_card_number, credit_card_expiration, result, id, date)
+    @repo.charge(credit_card_number, credit_card_expiration_date, result, id, date)
   end
 
   def invoice_items

@@ -1,3 +1,6 @@
+require 'bigdecimal'
+require 'bigdecimal/util'
+
 class Merchant
 
   attr_reader :id, :name, :created_at, :updated_at, :repo
@@ -19,8 +22,8 @@ class Merchant
   def favorite_customer
     success_invoices = invoices.select { |invoice| invoice.successful?}
     cust_id_hash = success_invoices.group_by {|invoice| invoice.customer_id}
-    cust_id_array = cust_id_hash.map { |key, value| [value.size,key] }
-    winner_id = cust_id_array.sort[0][1]
+    cust_id_array = cust_id_hash.map { |cust_id, invoices| [invoices.size, cust_id] }
+    winner_id = cust_id_array.sort[-1][1]
     @repo.find_customer(winner_id)
   end
 
@@ -29,7 +32,7 @@ class Merchant
   end
 
   def revenue_by_date(date)
-    invoices_for_date = invoices.select { |invoice| invoice.created_at[0..9] == date }
+    invoices_for_date = invoices.select { |invoice| Date.parse(invoice.created_at[0..9]) == date }
     invoices_for_date.map { |invoice| invoice.revenue }.reduce(:+)
   end
 

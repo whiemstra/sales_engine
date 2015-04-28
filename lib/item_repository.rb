@@ -1,7 +1,7 @@
 require 'csv'
 require_relative 'item'
 
-class ItemsRepo
+class ItemRepository
   attr_reader :engine, :items
 
   def initialize(engine)
@@ -9,33 +9,37 @@ class ItemsRepo
     @items = []
   end
 
+  def inspect
+    "#<#{self.class} #{@items.size} rows>"
+  end
+
   def populate(csv_object)
     csv_object.each do |row|
       @items << Item.new(row[:id].to_i, row[:name],
-                        row[:description], row[:unit_price].to_i,
+                        row[:description], row[:unit_price].to_s,
                         row[:merchant_id].to_i, row[:created_at],
                         row[:updated_at], self)
     end
   end
 
   def most_revenue(num)
-    revenue_for_items = @items.map { |item| item.revenue }
+    revenue_for_items = @items.map { |item| [item.revenue, item.id] }
     sorted_revenue = revenue_for_items.sort
-    reversed_sorted_rev = sorted_revenue.reverse[0..(num - 1)]
-    reversed_sorted_rev
+    reversed_sorted_rev = sorted_revenue.reverse.take(num)
+    reversed_sorted_rev.map { |revenue, item_id| find_by_id(item_id) }
   end
 
   def most_items(num)
-    top_items = @items.map { |item| [item.number_sold, item.id] }.reverse[0..(num - 1)]
+    top_items = @items.map { |item| [item.number_sold, item.id] }.sort.reverse[0..(num - 1)]
     top_items.map { |array| array[1] }.map { |id| find_by_id(id) }
   end
 
   def invoice_items(id)
-    @engine.invoice_item_repo.find_all_by_item_id(id)
+    @engine.invoice_item_repository.find_all_by_item_id(id)
   end
 
   def merchant(merchant_id)
-    @engine.merchant_repo.find_by_id(merchant_id)
+    @engine.merchant_repository.find_by_id(merchant_id)
   end
 
   def all

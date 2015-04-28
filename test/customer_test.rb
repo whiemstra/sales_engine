@@ -2,7 +2,7 @@ gem 'minitest'
 require 'minitest/autorun'
 require 'minitest/pride'
 require_relative '../lib/customer'
-require_relative '../lib/customer_repo'
+require_relative '../lib/customer_repository'
 require_relative '../lib/sales_engine'
 
 class CustomerTest < Minitest::Test
@@ -12,32 +12,32 @@ class CustomerTest < Minitest::Test
   end
 
   def test_can_find_associated_invoice_items
-    se = SalesEngine.new
+    se = SalesEngine.new('./data')
     se.populate_customer_repo
     se.populate_invoice_repo
     se.populate_invoice_item_repo
-    customer = se.customer_repo.find_by_id(3)
+    customer = se.customer_repository.find_by_id(3)
     assert_equal 4, customer.invoices.size
     assert_equal Invoice, customer.invoices[0].class
   end
 
   def test_find_associated_transactions
-    se = SalesEngine.new
+    se = SalesEngine.new('./data')
     se.populate_customer_repo
     se.populate_invoice_repo
     se.populate_transaction_repo
-    customer = se.customer_repo.find_by_id(3)
+    customer = se.customer_repository.find_by_id(3)
     assert_equal Transaction, customer.transactions[0].class
     assert_equal 7, customer.transactions.size
   end
 
   def test_find_favorite_merchant
-    se = SalesEngine.new
+    se = SalesEngine.new('./data')
     se.populate_customer_repo
     se.populate_invoice_repo
     se.populate_transaction_repo
     se.populate_merchant_repo
-    customer = se.customer_repo.find_by_id(4)
+    customer = se.customer_repository.find_by_id(4)
     assert_equal Merchant, customer.favorite_merchant.class
   end
 end
