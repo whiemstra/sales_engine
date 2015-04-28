@@ -32,13 +32,27 @@ class Item
     @repo.merchant(merchant_id)
   end
 
+  def quantify(iis)
+    iis.map { |ii| ii.quantity}.reduce(:+)
+  end
+
   def successful_invoice_items
     invoice_items.select(&:successful?)
   end
 
-  def quantify(iis)
-    iis.map { |ii| ii.quantity}.reduce(:+)
-  end
+  # def success_inv_by_date
+  #   successful_invoice_items.group_by { |ii| ii.invoice.created_at}
+  # end
+  #
+  # def best_day
+  #   results = success_inv_by_date.map do |date, iis|
+  #     [quantify(iis), Date.new(date[0..3].to_i, date[5..6].to_i, date[8..9].to_i)]
+  #   end
+  #   results.sort { |iis, date| iis[0] <=> date[0] }[1]
+  #   best_day.last
+  #   # best_day = results.sort_by(&:first)
+  #
+  # end
 
   def best_day
     dated_hash = successful_invoice_items.group_by { |ii| ii.invoice.created_at}
@@ -48,8 +62,13 @@ class Item
     result.sort[-1][1]
   end
 
+  def quantity_invoice_items
+    successful_invoice_items.map(&:quantity)
+  end
+
   def number_sold
-    number_sold = successful_invoice_items.map { |ii| ii.quantity }.reduce(:+)
+    number_sold = quantity_invoice_items.reduce(:+)
+    # number_sold = successful_invoice_items.map { |ii| ii.quantity }.reduce(:+)
     if number_sold.nil?
       0
     else
