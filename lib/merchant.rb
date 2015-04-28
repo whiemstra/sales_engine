@@ -1,3 +1,6 @@
+require 'bigdecimal'
+require 'bigdecimal/util'
+
 class Merchant
 
   attr_reader :id, :name, :created_at, :updated_at, :repo
@@ -29,7 +32,7 @@ class Merchant
   end
 
   def revenue_by_date(date)
-    invoices_for_date = invoices.select { |invoice| invoice.created_at[0..9] == date }
+    invoices_for_date = invoices.select { |invoice| Date.parse(invoice.created_at[0..9]) == date }
     invoices_for_date.map { |invoice| invoice.revenue }.reduce(:+)
   end
 

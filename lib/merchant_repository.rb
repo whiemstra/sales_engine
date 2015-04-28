@@ -1,5 +1,8 @@
 require 'csv'
 require_relative 'merchant'
+require 'bigdecimal'
+require 'bigdecimal/util'
+
 
 class MerchantRepository
   attr_reader :engine, :merchants
@@ -70,7 +73,7 @@ class MerchantRepository
 
   def revenue(date)
     viable_merchants = @merchants.select do |merchant|
-      merchant.invoices.any? { |invoice| invoice.created_at[0..9] == date }
+      merchant.invoices.any? { |invoice| Date.parse(invoice.created_at[0..9]) == date }
     end
     viable_merchants.map { |merchant| merchant.revenue(date) }.reduce(:+)
   end
