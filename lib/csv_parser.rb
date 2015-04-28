@@ -1,28 +1,28 @@
 require 'csv'
 
 class CSVParser
-  def self.parse_merchants
-    CSV.open "./data/merchants.csv", headers: true, header_converters: :symbol
+  def self.parse_merchants(filepath)
+    CSV.open "#{filepath}/merchants.csv", headers: true, header_converters: :symbol
   end
 
-  def self.parse_customers
-    CSV.open "./data/customers.csv", headers: true, header_converters: :symbol
+  def self.parse_customers(filepath)
+    CSV.open "#{filepath}/customers.csv", headers: true, header_converters: :symbol
   end
 
-  def self.parse_items
-    CSV.open "./data/items.csv", headers: true, header_converters: :symbol
+  def self.parse_items(filepath)
+    CSV.open "#{filepath}/items.csv", headers: true, header_converters: :symbol
   end
 
-  def self.parse_invoice_items
-    CSV.open "./data/invoice_items.csv", headers: true, header_converters: :symbol
+  def self.parse_invoice_items(filepath)
+    CSV.open "#{filepath}/invoice_items.csv", headers: true, header_converters: :symbol
   end
 
-  def self.parse_invoices
-    CSV.open "./data/invoices.csv", headers: true, header_converters: :symbol
+  def self.parse_invoices(filepath)
+    CSV.open "#{filepath}/invoices.csv", headers: true, header_converters: :symbol
   end
 
-  def self.parse_transactions
-    CSV.open "./data/transactions.csv", headers: true, header_converters: :symbol
+  def self.parse_transactions(filepath)
+    CSV.open "#{filepath}/transactions.csv", headers: true, header_converters: :symbol
   end
 
 end

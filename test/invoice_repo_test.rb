@@ -1,7 +1,7 @@
 gem 'minitest'
 require 'minitest/autorun'
 require 'minitest/pride'
-require './lib/invoice_repo'
+require './lib/invoice_repository'
 require './lib/sales_engine'
 
 class InvoiceRepoTest < MiniTest::Test

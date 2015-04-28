@@ -2,7 +2,7 @@ gem 'minitest'
 require 'minitest/autorun'
 require 'minitest/pride'
 require_relative '../lib/item'
-require_relative '../lib/items_repo'
+require_relative '../lib/item_repository'
 require_relative '../lib/sales_engine'
 
 class ItemTest < Minitest::Test

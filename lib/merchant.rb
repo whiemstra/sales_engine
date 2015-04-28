@@ -19,8 +19,8 @@ class Merchant
   def favorite_customer
     success_invoices = invoices.select { |invoice| invoice.successful?}
     cust_id_hash = success_invoices.group_by {|invoice| invoice.customer_id}
-    cust_id_array = cust_id_hash.map { |key, value| [value.size,key] }
-    winner_id = cust_id_array.sort[0][1]
+    cust_id_array = cust_id_hash.map { |cust_id, invoices| [invoices.size, cust_id] }
+    winner_id = cust_id_array.sort[-1][1]
     @repo.find_customer(winner_id)
   end
 

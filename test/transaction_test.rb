@@ -2,7 +2,7 @@ gem 'minitest'
 require 'minitest/autorun'
 require 'minitest/pride'
 require_relative '../lib/transaction'
-require_relative '../lib/transaction_repo'
+require_relative '../lib/transaction_repository'
 require_relative '../lib/sales_engine'
 
 class TransactionTest < Minitest::Test

@@ -1,12 +1,16 @@
 require 'csv'
 require_relative 'transaction'
 
-class TransactionRepo
+class TransactionRepository
   attr_reader :engine, :transactions
 
   def initialize(engine)
     @engine = engine
     @transactions = []
+  end
+
+  def inspect
+    "#<#{self.class} #{@transactions.size} rows>"
   end
 
   def populate(csv_object)
@@ -16,7 +20,7 @@ class TransactionRepo
   end
 
   def invoices(invoice_id)
-    @engine.invoice_repo.find_by_id(invoice_id)
+    @engine.invoice_repository.find_by_id(invoice_id)
   end
 
   def new_id
@@ -43,7 +47,7 @@ class TransactionRepo
     @transactions.detect { |transaction| transaction.invoice_id == invoice_id }
   end
 
-  def find_by_cc_num(cc_num)
+  def find_by_credit_card_number(cc_num)
     @transactions.detect { |transaction| transaction.credit_card_number == cc_num }
   end
 
@@ -63,7 +67,7 @@ class TransactionRepo
     @transactions.select { |transaction| transaction.invoice_id == invoice_id }
   end
 
-  def find_all_by_cc_num(cc_num)
+  def find_all_by_credit_card_number(cc_num)
     @transactions.select { |transaction| transaction.credit_card_number == cc_num }
   end
 
