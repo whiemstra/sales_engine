@@ -30,7 +30,7 @@ class InvoiceItemRepository
   end
 
   def create(items, invoice_id, date)
-    item_objs = items.map { |item_name| @engine.items_repo.find_by_name(item_name) }
+    item_objs = items.map { |item_name| @engine.item_repository.find_by_name(item_name) }
     grouped = item_objs.group_by { |item| item }
     grouped.map { |item, items| [item, items.size] }.each do |item, quantity|
       @invoice_items << InvoiceItem.new(new_id, item.id, invoice_id, quantity,

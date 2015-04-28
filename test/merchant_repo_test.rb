@@ -104,7 +104,7 @@ class MerchantRepoTest < MiniTest::Test
     se.populate_invoice_repo
     se.populate_merchant_repo
     se.populate_transaction_repo
-    assert_equal 190836805, se.merchant_repository.revenue('2012-03-27')
+    assert_equal "1908368.05", se.merchant_repository.revenue(Date.parse('2012-03-27')).to_digits
   end
 
   def test_returns_top_x_merchants_by_items_sold
