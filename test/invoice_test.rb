@@ -56,7 +56,7 @@ class InvoiceTest < Minitest::Test
     se.populate_invoice_repo
     se.populate_transaction_repo
     invoice = se.invoice_repository.find_by_id(1)
-    assert_equal 2106777, invoice.revenue
+    assert_equal '21067.77', invoice.revenue.to_digits
     invoice = se.invoice_repository.find_by_id(13)
     assert_equal 0, invoice.revenue
   end
@@ -85,7 +85,7 @@ class InvoiceTest < Minitest::Test
     se.populate_transaction_repo
     se.populate_invoice_repo
     invoice = se.invoice_repository.invoices.first
-    invoice.charge(credit_card_number: '4640960137749750', credit_card_expiration: '10/16', result: 'success')
+    invoice.charge(credit_card_number: '4640960137749750', credit_card_expiration_date: '10/16', result: 'success')
     transaction = se.transaction_repository.transactions.last
     assert_equal 5596, transaction.id
     assert_equal 1, transaction.invoice_id
