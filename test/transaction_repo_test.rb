@@ -101,13 +101,13 @@ class TransactionRepoTest < MiniTest::Test
   end
 
   def test_new_id_created
-    se = SalesEngine.new
+    se = SalesEngine.new('./data')
     se.populate_transaction_repo
     assert_equal 5596, se.transaction_repository.new_id
   end
 
   def test_new_transaction_created
-    se = SalesEngine.new
+    se = SalesEngine.new('./data')
     se.populate_transaction_repo
     se.transaction_repository.create('4640960137749750', '10/16', 'success', 23, "2012-03-27 14:54:09 UTC")
     transaction = se.transaction_repository.transactions.last

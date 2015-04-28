@@ -11,37 +11,37 @@ class InvoiceItemTest < Minitest::Test
   end
 
   def test_can_find_associated_invoices
-    se = SalesEngine.new
+    se = SalesEngine.new('./data')
     se.populate_invoice_item_repo
     se.populate_invoice_repo
-    ii = se.invoice_item_repo.find_by_id(1)
+    ii = se.invoice_item_repository.find_by_id(1)
     assert_equal Invoice, ii.invoice.class
     assert_equal 1, ii.invoice.id
   end
 
   def test_find_associated_item
-    se = SalesEngine.new
+    se = SalesEngine.new('./data')
     se.populate_invoice_item_repo
-    se.populate_items_repo
-    ii = se.invoice_item_repo.find_by_id(1)
+    se.populate_item_repo
+    ii = se.invoice_item_repository.find_by_id(1)
     assert_equal Item, ii.item.class
     assert_equal 539, ii.item.id
   end
 
   def test_produce_total_revenue_for_invoice_item
-    se = SalesEngine.new
+    se = SalesEngine.new('./data')
     se.populate_invoice_item_repo
-    se.populate_items_repo
-    ii = se.invoice_item_repo.find_by_id(1)
+    se.populate_item_repo
+    ii = se.invoice_item_repository.find_by_id(1)
     assert_equal 68175, ii.revenue
   end
 
-  def test_determines_if_ii_was_successful
-    se = SalesEngine.new
-    se.populate_transaction_repo
-    se.populate_invoice_repo
-    se.populate_invoice_item_repo
-
-  end
+  # def test_determines_if_ii_was_successful
+  #   se = SalesEngine.new('./data')
+  #   se.populate_transaction_repo
+  #   se.populate_invoice_repo
+  #   se.populate_invoice_item_repo
+  #
+  # end
 
 end

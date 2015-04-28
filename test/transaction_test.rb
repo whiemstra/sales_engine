@@ -12,9 +12,9 @@ class TransactionTest < Minitest::Test
   end
 
   def test_can_find_associated_invoice
-    se = SalesEngine.new
+    se = SalesEngine.new('./data')
     se.startup
-    transaction = se.transaction_repo.find_by_id(717)
+    transaction = se.transaction_repository.find_by_id(717)
     assert_equal 609, transaction.invoice_id
   end
 
