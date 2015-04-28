@@ -5,6 +5,6 @@ require './lib/csv_parser'
 
 class CSVParserTest < Minitest::Test
   def test_converts_csv_files
-    assert CSVParser.parse_customers
+    assert CSVParser.parse_customers('./data')
   end
 end

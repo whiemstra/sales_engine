@@ -33,7 +33,7 @@ class InvoiceItemTest < Minitest::Test
     se.populate_invoice_item_repo
     se.populate_item_repo
     ii = se.invoice_item_repository.find_by_id(539)
-    assert_equal 68175, ii.revenue
+    assert_equal '6849.57', ii.revenue.to_digits
   end
 
   # def test_determines_if_ii_was_successful
