@@ -28,7 +28,8 @@ class CSVParser
   private
 
   def self.parse(dirname, basename)
-    CSV.open File.join(dirname, basename), headers: true,
+    CSV.open  File.join(dirname, basename), 
+              headers: true,
               header_converters: :symbol
   end
 
