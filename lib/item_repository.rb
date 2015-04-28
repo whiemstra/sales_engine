@@ -30,14 +30,10 @@ class ItemRepository
   end
 
   def most_items(num)
-
     items_sold = @items.map { |item| [item.number_sold, item.id]}
     sorted_items = items_sold.sort
     top_items = sorted_items.reverse.take(num)
     top_items.map { |array| array[1] }.map { |id| find_by_id(id) }
-
-    # top_items = @items.map { |item| [item.number_sold, item.id] }.sort.reverse[0..(num - 1)]
-    # top_items.map { |array| array[1] }.map { |id| find_by_id(id) }
   end
 
   def invoice_items(id)
