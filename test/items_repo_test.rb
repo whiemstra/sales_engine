@@ -89,7 +89,7 @@ class ItemsRepoTest < MiniTest::Test
   def test_find_all_by_unit_price
     se = SalesEngine.new('./data')
     se.populate_item_repo
-    result = se.item_repository.find_all_by_unit_price(74294)
+    result = se.item_repository.find_all_by_unit_price(75107)
     assert_equal 1, result.count
   end
 
@@ -133,7 +133,7 @@ class ItemsRepoTest < MiniTest::Test
     se.populate_item_repo
     top_selling = se.item_repository.most_revenue(2)
     assert_equal 2, top_selling.size
-    assert_equal 114839374, top_selling[0]
+    assert_equal 1148393.74, top_selling[0]
   end
 
 end

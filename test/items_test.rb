@@ -74,7 +74,7 @@ class ItemTest < Minitest::Test
     se.populate_invoice_item_repo
     se.populate_item_repo
     item = se.item_repository.find_by_id(1)
-    assert_equal 8186663, item.revenue
+    assert_equal 81866.63, item.revenue
 
     item_with_no_sold = se.item_repository.find_by_id(737)
     assert_equal 0, item_with_no_sold.revenue

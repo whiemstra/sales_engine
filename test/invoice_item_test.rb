@@ -32,7 +32,7 @@ class InvoiceItemTest < Minitest::Test
     se = SalesEngine.new('./data')
     se.populate_invoice_item_repo
     se.populate_item_repo
-    ii = se.invoice_item_repository.find_by_id(1)
+    ii = se.invoice_item_repository.find_by_id(539)
     assert_equal 68175, ii.revenue
   end
 
