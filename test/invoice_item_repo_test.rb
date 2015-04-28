@@ -1,6 +1,8 @@
 gem 'minitest'
 require 'minitest/autorun'
 require 'minitest/pride'
+require 'bigdecimal'
+require 'bigdecimal/util'
 require_relative '../lib/invoice_item_repository'
 require_relative '../lib/sales_engine'
 
@@ -55,7 +57,7 @@ class InvoiceItemRepoTest < MiniTest::Test
   def test_find_an_invoice_item_by_unit_price
     se = SalesEngine.new('./data')
     se.populate_invoice_item_repo
-    assert_equal 4, se.invoice_item_repository.find_by_unit_price(2196).id
+    assert_equal 4, se.invoice_item_repository.find_by_unit_price(BigDecimal(2196)/100).id
   end
 
   def test_find_an_invoice_item_by_created_at
@@ -79,7 +81,7 @@ class InvoiceItemRepoTest < MiniTest::Test
   def test_find_all_invoice_items_by_unit_price
     se = SalesEngine.new('./data')
     se.populate_invoice_item_repo
-    assert_equal 11, se.invoice_item_repository.find_all_by_unit_price(2190).size
+    assert_equal 7, se.invoice_item_repository.find_all_by_unit_price(BigDecimal(13635)/100).size
   end
 
   def test_find_all_invoice_items_by_created_at
@@ -98,10 +100,12 @@ class InvoiceItemRepoTest < MiniTest::Test
     se = SalesEngine.new('./data')
     se.populate_invoice_item_repo
     se.populate_item_repo
-    se.invoice_item_repository.create(['Item Provident At', 'Item Autem Minima', 'Item Provident At'], 4, '2012-08-27 14:54:09 UTC')
+    item = se.item_repository.find_by_id(1)
+    item2 = se.item_repository.find_by_id(2)
+    se.invoice_item_repository.create([item, item2, item], 4, Date.parse('2012-08-27 14:54:09 UTC'))
     first_ii = se.invoice_item_repository.invoice_items[-2]
     second_ii = se.invoice_item_repository.invoice_items.last
-    assert_equal 6, first_ii.item_id
+    assert_equal 1, first_ii.item_id
     assert_equal 2, first_ii.quantity
     assert_equal 2, second_ii.item_id
     assert_equal 1, second_ii.quantity

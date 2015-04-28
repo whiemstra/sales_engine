@@ -87,7 +87,7 @@ class ItemTest < Minitest::Test
     se.populate_invoice_item_repo
     se.populate_item_repo
     item = se.item_repository.find_by_id(600)
-    assert_equal '2012-03-26', item.best_day
+    assert_equal '2012-03-26', item.best_day.to_s
   end
 
 end
