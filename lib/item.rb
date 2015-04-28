@@ -35,8 +35,8 @@ class Item
   def best_day
     dated_hash = successful_invoice_items.group_by { |ii| ii.invoice.created_at}
     result = dated_hash.map { |date, iis| [quantify(iis), Date.new(date[0..3].to_i, date[5..6].to_i, date[8..9].to_i)] }
-    date = result.sort[-1][1]
-    date.strftime('%Y-%m-%d')
+    result.sort[-1][1]
+    # date.strftime('%Y-%m-%d')
   end
 
   def number_sold
@@ -49,7 +49,7 @@ class Item
   end
 
   def revenue
-    number_sold * unit_price.to_i
+    number_sold * unit_price
   end
 
 end

@@ -27,7 +27,7 @@ class InvoiceItem
   end
 
   def revenue
-    @unit_price.to_i * @quantity
+    @unit_price * @quantity
   end
 
   def successful?
