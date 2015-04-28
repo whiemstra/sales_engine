@@ -35,7 +35,7 @@ class MerchantTest < Minitest::Test
     se.populate_invoice_item_repo
     se.populate_transaction_repo
     merchant = se.merchant_repository.find_by_id(1)
-    assert_equal 52877464, merchant.revenue
+    assert_equal '528774.64', merchant.revenue.to_digits
   end
 
   def test_find_revenue_by_date
@@ -45,7 +45,7 @@ class MerchantTest < Minitest::Test
     se.populate_invoice_item_repo
     se.populate_transaction_repo
     merchant = se.merchant_repository.find_by_id(1)
-    assert_equal 1771651, merchant.revenue('2012-03-27')
+    assert_equal '17716.51', merchant.revenue(Date.parse('2012-03-27')).to_digits
   end
 
   def test_total_num_of_items_a_merchant_sold
@@ -55,7 +55,7 @@ class MerchantTest < Minitest::Test
     se.populate_invoice_item_repo
     se.populate_transaction_repo
     merchant = se.merchant_repository.find_by_id(1)
-    assert_equal 1380, merchant.quantity 
+    assert_equal 1380, merchant.quantity
   end
 
   def test_finds_favorite_customer
@@ -68,7 +68,7 @@ class MerchantTest < Minitest::Test
     merchant = se.merchant_repository.find_by_id(2)
     customer = merchant.favorite_customer
     assert_equal Customer, customer.class
-    assert_equal "Ramona", customer.first_name
+    assert_equal "Efren", customer.first_name
   end
 
   def test_find_customers_with_pending_invoices
