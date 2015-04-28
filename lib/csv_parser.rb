@@ -26,3 +26,4 @@ class CSVParser
   end
 
 end
+

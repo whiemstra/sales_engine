@@ -6,12 +6,12 @@ require './lib/sales_engine'
 class SalesEngineTest < Minitest::Test
 
   def test_sales_engine_creates_repo_objects
-    se = SalesEngine.new
-    assert se.merchant_repo
-    assert se.invoice_repo
-    assert se.items_repo
-    assert se.invoice_item_repo
-    assert se.customer_repo
-    assert se.transaction_repo
+    se = SalesEngine.new('./data')
+    assert se.merchant_repository
+    assert se.invoice_repository
+    assert se.item_repository
+    assert se.invoice_item_repository
+    assert se.customer_repository
+    assert se.transaction_repository
   end
 end

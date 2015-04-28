@@ -63,7 +63,7 @@ class ItemRepository
   end
 
   def find_by_unit_price(unit_price)
-    @items.detect { |item| item.unit_price == unit_price }
+    @items.detect { |item| item.unit_price.to_i == unit_price }
   end
 
   def find_by_merchant_id(merchant_id)
@@ -87,7 +87,7 @@ class ItemRepository
   end
 
   def find_all_by_unit_price(unit_price)
-    @items.select { |item| item.unit_price == unit_price }
+    @items.select { |item| item.unit_price.to_i == unit_price }
   end
 
   def find_all_by_merchant_id(merchant_id)
