@@ -32,12 +32,12 @@ class Invoice
   def charge(credit_card_number:, credit_card_expiration_date:, result:)
     date = time_format
     @repo.charge(
-                credit_card_number,
-                credit_card_expiration_date,
-                result,
-                id,
-                date
-                )
+      credit_card_number,
+      credit_card_expiration_date,
+      result,
+      id,
+      date
+    )
   end
 
   def invoice_items
@@ -57,17 +57,16 @@ class Invoice
   end
 
   def successful?
-    transactions.any? { |transaction| transaction.success? }
+    transactions.any?(&:success?)
   end
 
   def revenue
-    total = invoice_items.map { |ii| ii.revenue }.reduce(:+) if successful?
+    total = invoice_items.map(&:revenue).reduce(:+) if successful?
     total ? total : 0
   end
 
   def quantity
-    total = invoice_items.map { |ii| ii.quantity }.reduce(:+) if successful?
+    total = invoice_items.map(&:quantity).reduce(:+) if successful?
     total ? total : 0
   end
-
 end
