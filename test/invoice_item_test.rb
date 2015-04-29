@@ -28,20 +28,23 @@ class InvoiceItemTest < Minitest::Test
     assert_equal 539, ii.item.id
   end
 
-  def test_produce_total_revenue_for_invoice_item
+  def test_invoice_item_was_successful
     se = SalesEngine.new('./data')
+    se.populate_transaction_repo
+    se.populate_invoice_repo
+    se.populate_invoice_item_repo
+    ii = se.invoice_item_repository.find_by_id(1)
+    assert ii.successful?
+    ii = se.invoice_item_repository.find_by_id(13)
+    refute ii.successful?
+  end
+
+  def test_produce_total_revenue_for_invoice_item
+  se = SalesEngine.new('./data')
     se.populate_invoice_item_repo
     se.populate_item_repo
     ii = se.invoice_item_repository.find_by_id(539)
     assert_equal '6849.57', ii.revenue.to_digits
   end
-
-  # def test_determines_if_ii_was_successful
-  #   se = SalesEngine.new('./data')
-  #   se.populate_transaction_repo
-  #   se.populate_invoice_repo
-  #   se.populate_invoice_item_repo
-  #
-  # end
 
 end

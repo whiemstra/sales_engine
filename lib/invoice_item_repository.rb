@@ -32,16 +32,6 @@ class InvoiceItemRepository
     @invoice_items.last.id + 1
   end
 
-  def create(items, invoice_id, date)
-    grouped_items = items.group_by { |item| item }
-    item_and_quantity = grouped_items.map { |item, items| [item, items.size] }
-    item_and_quantity.each do |item, quantity|
-      @invoice_items << InvoiceItem.new(new_id, item.id, invoice_id, quantity,
-                                        item.unit_price, date, date, self
-      )
-    end
-  end
-
   def invoice(invoice_id)
     @engine.invoice_repository.find_by_id(invoice_id)
   end
@@ -109,4 +99,13 @@ class InvoiceItemRepository
   def find_all_by_updated_at(updated_at)
     @invoice_items.select { |i_item| i_item.updated_at == updated_at }
   end
+
+  def create(items, invoice_id, date)
+    grouped_items = items.group_by { |item| item }
+    item_and_quantity = grouped_items.map { |item, items| [item, items.size] }
+    item_and_quantity.each do |item, quantity|
+      @invoice_items << InvoiceItem.new(new_id, item.id, invoice_id, quantity, item.unit_price, date, date, self)
+    end
+  end
+
 end
