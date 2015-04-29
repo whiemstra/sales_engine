@@ -15,10 +15,16 @@ class ItemRepository
 
   def populate(csv_object)
     csv_object.each do |row|
-      @items << Item.new(row[:id].to_i, row[:name],
-                        row[:description], row[:unit_price].to_s,
-                        row[:merchant_id].to_i, row[:created_at],
-                        row[:updated_at], self)
+      @items << Item.new(
+        row[:id].to_i,
+        row[:name],
+        row[:description],
+        row[:unit_price].to_s,
+        row[:merchant_id].to_i,
+        row[:created_at],
+        row[:updated_at],
+        self
+      )
     end
   end
 
