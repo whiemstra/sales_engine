@@ -40,7 +40,7 @@ class Item
     invoice_items.select(&:successful?)
   end
 
-  def success_invoice_by_date
+  def success_invoice_items_by_date
     successful_invoice_items.group_by do |invoice_item|
       invoice_item.invoice.created_at
     end
@@ -51,7 +51,7 @@ class Item
   end
 
   def worst_to_best_days
-    success_invoice_by_date.map do |date, invoice_items|
+    success_invoice_items_by_date.map do |date, invoice_items|
       [quantify(invoice_items), date_format(date)]
     end
   end

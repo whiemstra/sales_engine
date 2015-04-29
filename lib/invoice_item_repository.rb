@@ -16,14 +16,15 @@ class InvoiceItemRepository
   def populate(csv_object)
     csv_object.each do |row|
       @invoice_items << InvoiceItem.new(
-                                        row[:id].to_i,
-                                        row[:item_id].to_i,
-                                        row[:invoice_id].to_i,
-                                        row[:quantity].to_i,
-                                        row[:unit_price].to_s,
-                                        row[:created_at],
-                                        row[:updated_at],
-                                        self)
+        row[:id].to_i,
+        row[:item_id].to_i,
+        row[:invoice_id].to_i,
+        row[:quantity].to_i,
+        row[:unit_price].to_s,
+        row[:created_at],
+        row[:updated_at],
+        self
+      )
     end
   end
 
@@ -35,14 +36,9 @@ class InvoiceItemRepository
     grouped_items = items.group_by { |item| item }
     item_and_quantity = grouped_items.map { |item, items| [item, items.size] }
     item_and_quantity.each do |item, quantity|
-      @invoice_items << InvoiceItem.new(new_id,
-                                        item.id,
-                                        invoice_id,
-                                        quantity,
-                                        item.unit_price,
-                                        date,
-                                        date,
-                                        self)
+      @invoice_items << InvoiceItem.new(new_id, item.id, invoice_id, quantity,
+                                        item.unit_price, date, date, self
+      )
     end
   end
 

@@ -15,7 +15,15 @@ class InvoiceRepository
 
   def populate(csv_object)
     csv_object.each do |row|
-      @invoices << Invoice.new(row[:id].to_i, row[:customer_id].to_i, row[:merchant_id].to_i, row[:status], row[:created_at], row[:updated_at], self)
+      @invoices << Invoice.new(
+        row[:id].to_i,
+        row[:customer_id].to_i,
+        row[:merchant_id].to_i,
+        row[:status],
+        row[:created_at],
+        row[:updated_at],
+        self
+      )
     end
   end
 
@@ -51,7 +59,9 @@ class InvoiceRepository
   def create(customer:, merchant:, items:)
     date = date_formatted
     @engine.invoice_item_repository.create(items, new_id, date)
-    new_invoice = Invoice.new(new_id, customer.id, merchant.id, 'shipped', date, date, self)
+    new_invoice = Invoice.new(new_id, customer.id, merchant.id,
+                              'shipped', date, date, self
+    )
     @invoices << new_invoice
     new_invoice
   end

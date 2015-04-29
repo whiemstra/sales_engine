@@ -16,6 +16,11 @@ class ItemTest < Minitest::Test
     assert_equal 'Item Adipisci Sint', item.name
   end
 
+  def test_item_has_description
+    item = Item.new(1, 2, 'Nostrum doloribus quia. Expedita vitae beatae cumque. Aut ut illo aut eum.', 4, 5, 6, 7, 8)
+    assert_equal "Nostrum doloribus quia. Expedita vitae beatae cumque. Aut ut illo aut eum.", item.description
+  end
+
   def test_can_find_associated_invoice_items
     se = SalesEngine.new('./data')
     se.startup
@@ -23,16 +28,6 @@ class ItemTest < Minitest::Test
     assert_equal 15, item.invoice_items.size
     assert_equal InvoiceItem, item.invoice_items[0].class
   end
-
-  def test_item_has_description
-    item = Item.new(1, 2, 'Nostrum doloribus quia. Expedita vitae beatae cumque. Aut ut illo aut eum.', 4, 5, 6, 7, 8)
-    assert_equal "Nostrum doloribus quia. Expedita vitae beatae cumque. Aut ut illo aut eum.", item.description
-  end
-
-  # def test_item_has_unit_price
-  #   item = Item.new(1, 2, 3, 59454, 5, 6, 7, 8)
-  #   assert_equal 59454 (BigDecimal???), item.unit_price
-  # end
 
   def test_can_find_associated_merchant
     se = SalesEngine.new('./data')
@@ -55,40 +50,44 @@ class ItemTest < Minitest::Test
   end
 
   def test_determines_num_of_items_successfully_sold
-    se = SalesEngine.new('./data')
-    se.populate_transaction_repo
-    se.populate_invoice_repo
-    se.populate_invoice_item_repo
-    se.populate_item_repo
-    item = se.item_repository.find_by_id(1)
-    assert_equal 109, item.number_sold
+  se = SalesEngine.new('./data')
+  se.populate_transaction_repo
+  se.populate_invoice_repo
+  se.populate_invoice_item_repo
+  se.populate_item_repo
+  item = se.item_repository.find_by_id(1)
+  assert_equal 109, item.number_sold
 
-    item_not_sold = se.item_repository.find_by_id(737)
-    assert_equal 0, item_not_sold.number_sold
+  item_not_sold = se.item_repository.find_by_id(737)
+  assert_equal 0, item_not_sold.number_sold
   end
 
   def test_determines_item_revenue
-    se = SalesEngine.new('./data')
-    se.populate_transaction_repo
-    se.populate_invoice_repo
-    se.populate_invoice_item_repo
-    se.populate_item_repo
-    item = se.item_repository.find_by_id(1)
-    assert_equal 81866.63, item.revenue
+  se = SalesEngine.new('./data')
+  se.populate_transaction_repo
+  se.populate_invoice_repo
+  se.populate_invoice_item_repo
+  se.populate_item_repo
+  item = se.item_repository.find_by_id(1)
+  assert_equal 81866.63, item.revenue
 
-    item_with_no_sold = se.item_repository.find_by_id(737)
-    assert_equal 0, item_with_no_sold.revenue
+  item_with_no_sold = se.item_repository.find_by_id(737)
+  assert_equal 0, item_with_no_sold.revenue
   end
 
   def test_best_day_returns_day_with_most_sales
-    se = SalesEngine.new('./data')
-    se.populate_transaction_repo
-    se.populate_invoice_repo
-    se.populate_invoice_item_repo
-    se.populate_item_repo
-    item = se.item_repository.find_by_id(600)
-    assert_equal '2012-03-26', item.best_day.to_s
+  se = SalesEngine.new('./data')
+  se.populate_transaction_repo
+  se.populate_invoice_repo
+  se.populate_invoice_item_repo
+  se.populate_item_repo
+  item = se.item_repository.find_by_id(600)
+  assert_equal '2012-03-26', item.best_day.to_s
   end
 
 end
 
+# def test_item_has_unit_price
+#   item = Item.new(1, 2, 3, 59454, 5, 6, 7, 8)
+#   assert_equal 59454 (BigDecimal???), item.unit_price
+# end
