@@ -14,11 +14,14 @@ class Merchant
   end
 
   def customers_with_pending_invoices
-    success_invoices = invoices.select do |invoice|
+    cust_ids = unsuccessful_invoices.map(&:customer_id).uniq
+    cust_ids.map { |id| @repo.find_customer(id) }
+  end
+
+  def unsuccessful_invoices
+    invoices.select do |invoice|
       invoice.successful? == false
     end
-    uniq_cust_ids = success_invoices.map { |invoice| invoice.customer_id }.uniq
-    uniq_cust_ids.map { |id| @repo.find_customer(id) }
   end
 
   def successful_invoices
