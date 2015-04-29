@@ -15,10 +15,15 @@ class InvoiceItemRepository
 
   def populate(csv_object)
     csv_object.each do |row|
-      @invoice_items << InvoiceItem.new(row[:id].to_i, row[:item_id].to_i,
-                                        row[:invoice_id].to_i, row[:quantity].to_i,
-                                        row[:unit_price].to_s, row[:created_at],
-                                        row[:updated_at], self)
+      @invoice_items << InvoiceItem.new(
+                                        row[:id].to_i,
+                                        row[:item_id].to_i,
+                                        row[:invoice_id].to_i,
+                                        row[:quantity].to_i,
+                                        row[:unit_price].to_s,
+                                        row[:created_at],
+                                        row[:updated_at],
+                                        self)
     end
   end
 
@@ -30,7 +35,14 @@ class InvoiceItemRepository
     grouped_items = items.group_by { |item| item }
     item_and_quantity = grouped_items.map { |item, items| [item, items.size] }
     item_and_quantity.each do |item, quantity|
-      @invoice_items << InvoiceItem.new(new_id, item.id, invoice_id, quantity, item.unit_price, date, date, self)
+      @invoice_items << InvoiceItem.new(new_id,
+                                        item.id,
+                                        invoice_id,
+                                        quantity,
+                                        item.unit_price,
+                                        date,
+                                        date,
+                                        self)
     end
   end
 
@@ -51,54 +63,54 @@ class InvoiceItemRepository
   end
 
   def find_by_id(id)
-    @invoice_items.detect { |invoice_item| invoice_item.id == id }
+    @invoice_items.detect { |i_item| i_item.id == id }
   end
 
   def find_by_item_id(item_id)
-    @invoice_items.detect { |invoice_item| invoice_item.item_id == item_id }
+    @invoice_items.detect { |i_item| i_item.item_id == item_id }
   end
 
   def find_by_invoice_id(invoice_id)
-    @invoice_items.detect { |invoice_item| invoice_item.invoice_id == invoice_id }
+    @invoice_items.detect { |i_item| i_item.invoice_id == invoice_id }
   end
 
   def find_by_quantity(quantity)
-    @invoice_items.detect { |invoice_item| invoice_item.quantity == quantity }
+    @invoice_items.detect { |i_item| i_item.quantity == quantity }
   end
 
   def find_by_unit_price(unit_price)
-    @invoice_items.detect { |invoice_item| invoice_item.unit_price == unit_price }
+    @invoice_items.detect { |i_item| i_item.unit_price == unit_price }
   end
 
   def find_by_created_at(created_at)
-    @invoice_items.detect { |invoice_item| invoice_item.created_at == created_at }
+    @invoice_items.detect { |i_item| i_item.created_at == created_at }
   end
 
   def find_by_updated_at(updated_at)
-    @invoice_items.detect { |invoice_item| invoice_item.updated_at == updated_at }
+    @invoice_items.detect { |i_item| i_item.updated_at == updated_at }
   end
 
   def find_all_by_item_id(item_id)
-    @invoice_items.select { |invoice_item| invoice_item.item_id == item_id }
+    @invoice_items.select { |i_item| i_item.item_id == item_id }
   end
 
   def find_all_by_invoice_id(invoice_id)
-    @invoice_items.select { |invoice_item| invoice_item.invoice_id == invoice_id }
+    @invoice_items.select { |i_item| i_item.invoice_id == invoice_id }
   end
 
   def find_all_by_quantity(quantity)
-    @invoice_items.select { |invoice_item| invoice_item.quantity == quantity }
+    @invoice_items.select { |i_item| i_item.quantity == quantity }
   end
 
   def find_all_by_unit_price(unit_price)
-    @invoice_items.select { |invoice_item| invoice_item.unit_price == unit_price }
+    @invoice_items.select { |i_item| i_item.unit_price == unit_price }
   end
 
   def find_all_by_created_at(created_at)
-    @invoice_items.select { |invoice_item| invoice_item.created_at == created_at }
+    @invoice_items.select { |i_item| i_item.created_at == created_at }
   end
 
   def find_all_by_updated_at(updated_at)
-    @invoice_items.select { |invoice_item| invoice_item.updated_at == updated_at }
+    @invoice_items.select { |i_item| i_item.updated_at == updated_at }
   end
 end

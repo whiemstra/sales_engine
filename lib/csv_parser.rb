@@ -1,29 +1,36 @@
 require 'csv'
 
 class CSVParser
-  def self.parse_merchants(filepath)
-    CSV.open "#{filepath}/merchants.csv", headers: true, header_converters: :symbol
+  def self.parse_merchants(dirname)
+    parse(dirname, 'merchants.csv')
   end
 
-  def self.parse_customers(filepath)
-    CSV.open "#{filepath}/customers.csv", headers: true, header_converters: :symbol
+  def self.parse_customers(dirname)
+    parse(dirname, 'customers.csv')
   end
 
-  def self.parse_items(filepath)
-    CSV.open "#{filepath}/items.csv", headers: true, header_converters: :symbol
+  def self.parse_items(dirname)
+    parse(dirname, 'items.csv')
   end
 
-  def self.parse_invoice_items(filepath)
-    CSV.open "#{filepath}/invoice_items.csv", headers: true, header_converters: :symbol
+  def self.parse_invoice_items(dirname)
+    parse(dirname, 'invoice_items.csv')
   end
 
-  def self.parse_invoices(filepath)
-    CSV.open "#{filepath}/invoices.csv", headers: true, header_converters: :symbol
+  def self.parse_invoices(dirname)
+    parse(dirname, 'invoices.csv')
   end
 
-  def self.parse_transactions(filepath)
-    CSV.open "#{filepath}/transactions.csv", headers: true, header_converters: :symbol
+  def self.parse_transactions(dirname)
+    parse(dirname, 'transactions.csv')
+  end
+
+  private
+
+  def self.parse(dirname, basename)
+    CSV.open  File.join(dirname, basename),
+              headers: true,
+              header_converters: :symbol
   end
 
 end
-
