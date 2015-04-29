@@ -16,17 +16,19 @@ class Customer
     @repo.invoices(id)
   end
 
+  def successful_invoices
+    invoices.select(&:successful?)
+  end
+
   def transactions
     invoices.map { |invoice| invoice.transactions}.flatten
   end
 
   def favorite_merchant
-    successful_invoices = invoices.select {|invoice| invoice.successful? }
-    grouped_invoices = successful_invoices.group_by(&:merchant_id)
-    merchant_invoices = grouped_invoices.map do |merchant_id, invoices|
+    successful_invoices.group_by(&:merchant_id)
+    merchant_id = grouped_invoices.map do |merchant_id, invoices|
       [invoices.size, merchant_id]
-    end
-    merchant_id = merchant_invoices.sort[-1][1]
+    end.sort[-1][1]
     @repo.find_merchant(merchant_id)
   end
 
