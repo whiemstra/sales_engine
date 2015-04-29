@@ -89,10 +89,14 @@ class InvoiceRepository
   end
 
   def average_revenue_for_date(date)
-    invoices = successful_invoices.select do |invoice|
+    invoices = invoices_by_date(date)
+    (invoices.map(&:revenue).reduce(:+) / invoices.size).round(2)
+  end
+
+  def invoices_by_date(date)
+    successful_invoices.select do |invoice|
       invoice.created_at[0..9] == date.strftime('%Y-%m-%d')
     end
-    (invoices.map(&:revenue).reduce(:+) / invoices.size).round(2)
   end
 
   def average_items(date=nil)
@@ -105,9 +109,7 @@ class InvoiceRepository
   end
 
   def average_items_by_date(date)
-    invoices = successful_invoices.select do |invoice|
-      invoice.created_at[0..9] == date.strftime('%Y-%m-%d')
-    end
+    invoices = invoices_by_date(date)
     quantities = invoices.map(&:quantity)
     (BigDecimal(quantities.reduce(:+).to_s) / invoices.size).round(2)
   end
