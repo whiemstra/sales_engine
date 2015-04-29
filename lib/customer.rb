@@ -42,4 +42,7 @@ class Customer
     total ? total : 0
   end
 
+  def pending_invoices
+    invoices.select { |invoice| invoice.successful? == false}
+  end
 end

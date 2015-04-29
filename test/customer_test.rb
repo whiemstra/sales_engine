@@ -40,5 +40,16 @@ class CustomerTest < Minitest::Test
     customer = se.customer_repository.find_by_id(4)
     assert_equal Merchant, customer.favorite_merchant.class
   end
+
+  def test_find_pending_invoices
+    se = SalesEngine.new('./data')
+    se.populate_transaction_repo
+    se.populate_invoice_repo
+    se.populate_customer_repo
+    customer = se.customer_repository.find_by_id(9)
+    pending = customer.pending_invoices
+    assert_equal Array, pending.class
+    refute pending[0].successful?
+  end
 end
 
