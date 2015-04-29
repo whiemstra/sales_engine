@@ -25,7 +25,7 @@ class Customer
   end
 
   def favorite_merchant
-    successful_invoices.group_by(&:merchant_id)
+    grouped_invoices = successful_invoices.group_by(&:merchant_id)
     merchant_id = grouped_invoices.map do |merchant_id, invoices|
       [invoices.size, merchant_id]
     end.sort[-1][1]
