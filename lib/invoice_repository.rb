@@ -27,6 +27,14 @@ class InvoiceRepository
     end
   end
 
+  def pending
+    @invoices.select { |invoice| invoice.successful? == false}
+  end
+
+  def successful_invoices
+    @invoices.select(&:successful?)
+  end
+
   def transactions(id)
     @engine.transaction_repository.find_all_by_invoice_id(id)
   end
@@ -69,6 +77,22 @@ class InvoiceRepository
   def charge(credit_card_number, credit_card_expiration, result, id, date)
     @engine.transaction_repository
       .create(credit_card_number, credit_card_expiration, result, id, date)
+  end
+
+  def average_revenue(date=nil)
+    if date.nil?
+      revenues = successful_invoices.map(&:revenue)
+      (revenues.reduce(:+) / revenues.size).round(2)
+    else
+      average_revenue_for_date(date)
+    end
+  end
+
+  def average_revenue_for_date(date)
+    invoices = successful_invoices.select do |invoice|
+      invoice.created_at[0..9] == date.strftime('%Y-%m-%d')
+    end
+    (invoices.map(&:revenue).reduce(:+) / invoices.size).round(2)
   end
 
   def all

@@ -130,4 +130,31 @@ class InvoiceRepoTest < MiniTest::Test
     assert transaction.success?
   end
 
+  def test_find_pending_invoices
+    se = SalesEngine.new('./data')
+    se.populate_transaction_repo
+    se.populate_invoice_repo
+    pending_invoices = se.invoice_repository.pending
+    assert_equal Array, pending_invoices.class
+    refute pending_invoices[0].successful?
+  end
+
+  def test_find_average_revenue
+    se = SalesEngine.new('./data')
+    se.populate_transaction_repo
+    se.populate_invoice_repo
+    se.populate_invoice_item_repo
+    average = se.invoice_repository.average_revenue
+    assert_equal '12369.53', average.to_digits
+  end
+
+  def test_find_average_revenue_for_date
+    se = SalesEngine.new('./data')
+    se.populate_transaction_repo
+    se.populate_invoice_repo
+    se.populate_invoice_item_repo
+    average = se.invoice_repository.average_revenue(DateTime.parse('2012-03-21 13:54:10 UTC'))
+    assert_equal '12239.24', average.to_digits
+  end
+
 end
