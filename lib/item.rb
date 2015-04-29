@@ -32,8 +32,9 @@ class Item
     @repo.merchant(merchant_id)
   end
 
-  def quantify(iis)
-    iis.map { |ii| ii.quantity}.reduce(:+)
+  def quantify(invoice_items)
+    invoice_items.map(&:quantity).reduce(:+)
+    # iis.map { |ii| ii.quantity}.reduce(:+)
   end
 
   def successful_invoice_items
@@ -41,20 +42,31 @@ class Item
   end
 
   def success_invoice_by_date
-    successful_invoice_items.group_by { |ii| ii.invoice.created_at}
+    successful_invoice_items.group_by { |invoice_item| invoice_item.invoice.created_at}
   end
 
   def date_format(date)
     Date.new(date[0..3].to_i, date[5..6].to_i, date[8..9].to_i)
   end
 
-  def best_day
-    results = success_invoice_by_date.map do |date, iis|
-      [quantify(iis), date_format(date)]
+  def worst_to_best_days
+    success_invoice_by_date.map do |date, invoice_items|
+      [quantify(invoice_items), date_format(date)]
     end
-    best_day = results.sort_by(&:first)
-    best_day.last.last
   end
+
+  def best_day
+    best_day = worst_to_best_days.sort_by(&:first).last
+    best_day.last
+  end
+
+  # def best_day
+  #   results = success_invoice_by_date.map do |date, iis|
+  #     [quantify(iis), date_format(date)]
+  #   end
+  #   best_day = results.sort_by(&:first).last
+  #   best_day.last
+  # end
 
   # def best_day
   #   dated_hash = successful_invoice_items.group_by { |ii| ii.invoice.created_at}
