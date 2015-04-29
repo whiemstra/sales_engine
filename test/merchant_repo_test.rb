@@ -27,17 +27,6 @@ class MerchantRepoTest < MiniTest::Test
     se = SalesEngine.new('./data')
     se.populate_merchant_repo
     assert_equal Merchant, se.merchant_repository.random.class
-    merchant_one = se.merchant_repository.random
-    merchant_two = se.merchant_repository.random
-    100.times do
-      break if merchant_one.id == merchant_two.id
-    end
-    refute_equal merchant_one.id, merchant_two.id
-
-    # se = SalesEngine.new
-    # se.startup
-    # assert_equal Merchant, se.merchant_repo.random.class
-    # refute se.merchant_repo.random.empty?
   end
 
   def test_find_a_merchant_by_id

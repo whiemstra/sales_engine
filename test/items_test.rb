@@ -86,8 +86,3 @@ class ItemTest < Minitest::Test
   end
 
 end
-
-# def test_item_has_unit_price
-#   item = Item.new(1, 2, 3, 59454, 5, 6, 7, 8)
-#   assert_equal 59454 (BigDecimal???), item.unit_price
-# end
