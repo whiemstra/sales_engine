@@ -84,4 +84,12 @@ class CustomerRepository
     @customers.select { |customer| customer.updated_at == updated_at }
   end
 
+  def most_items
+    @customers.sort_by(&:quantity).last
+  end
+
+  def most_revenue
+    @customers.sort_by(&:revenue).last
+  end
 end
+

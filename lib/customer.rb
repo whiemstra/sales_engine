@@ -32,4 +32,14 @@ class Customer
     @repo.find_merchant(merchant_id)
   end
 
+  def quantity
+    total = successful_invoices.map(&:quantity).reduce(:+)
+    total ? total : 0
+  end
+
+  def revenue
+    total = invoices.map(&:revenue).reduce(:+)
+    total ? total : 0
+  end
+
 end

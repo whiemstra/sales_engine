@@ -95,4 +95,26 @@ class CustomerRepoTest < MiniTest::Test
     assert_equal 'Frami', se.customer_repository.find_by_full_name('Ashly Frami').last_name
   end
 
+  def test_find_customer_with_most_items
+    se = SalesEngine.new('./data')
+    se.populate_transaction_repo
+    se.populate_invoice_item_repo
+    se.populate_invoice_repo
+    se.populate_customer_repo
+    top_customer = se.customer_repository.most_items
+    assert_equal 622, top_customer.id
+  end
+
+  def test_find_customer_with_most_revenue
+    se = SalesEngine.new('./data')
+    se.populate_transaction_repo
+    se.populate_invoice_item_repo
+    se.populate_invoice_repo
+    se.populate_customer_repo
+    top_customer = se.customer_repository.most_revenue
+    assert_equal 601, top_customer.id
+    assert_equal '201936.96', top_customer.revenue.to_digits
+  end
+
 end
+
