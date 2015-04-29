@@ -3,7 +3,11 @@ require 'bigdecimal/util'
 
 class Merchant
 
-  attr_reader :id, :name, :created_at, :updated_at, :repo
+  attr_reader :id,
+              :name,
+              :created_at,
+              :updated_at,
+              :repo
 
   def initialize(id, name, created_at, updated_at, repo)
     @id = id
@@ -42,14 +46,6 @@ class Merchant
     winner = worst_to_best_customer.sort_by(&:first).last
     winner_id = winner.last
     @repo.find_customer(winner_id)
-
-    # success_invoices = invoices.select { |invoice| invoice.successful?}
-    # cust_id_hash = success_invoices.group_by {|invoice| invoice.customer_id}
-    # cust_id_array = cust_id_hash.map do |cust_id, invoices|
-    #   [invoices.size, cust_id]
-    # end
-    # winner_id = cust_id_array.sort[-1][1]
-    # @repo.find_customer(winner_id)
   end
 
   def revenue(date=nil)
@@ -64,7 +60,7 @@ class Merchant
     invoices_for_date = invoices.select do |invoice|
       Date.parse(invoice.created_at[0..9]) == date
     end
-    invoices_for_date.map { |invoice| invoice.revenue }.reduce(:+)
+    invoices_for_date.map(&:revenue).reduce(:+)
   end
 
   def items
