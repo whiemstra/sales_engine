@@ -76,7 +76,7 @@ class Merchant
   end
 
   def quantity
-    invoices.map { |invoice| invoice.quantity}.reduce(:+)
+    invoices.map(&:quantity).reduce(:+)
   end
 
 end
