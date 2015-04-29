@@ -16,15 +16,15 @@ class TransactionRepository
   def populate(csv_object)
     csv_object.each do |row|
       @transactions << Transaction.new(
-        row[:id].to_i,
-        row[:invoice_id].to_i,
-        row[:credit_card_number],
-        row[:credit_card_expiration_date],
-        row[:result],
-        row[:created_at],
-        row[:updated_at],
-        self
-      )
+                                        row[:id].to_i,
+                                        row[:invoice_id].to_i,
+                                        row[:credit_card_number],
+                                        row[:credit_card_expiration_date],
+                                        row[:result],
+                                        row[:created_at],
+                                        row[:updated_at],
+                                        self
+                                        )
     end
   end
 
@@ -37,8 +37,16 @@ class TransactionRepository
   end
 
   def create(credit_card_num, credit_card_exp, result, invoice_id, date)
-    @transactions << Transaction.new(new_id, invoice_id, credit_card_num,
-                                     credit_card_exp, result, date, date, self)
+    @transactions << Transaction.new(
+                                      new_id,
+                                      invoice_id,
+                                      credit_card_num,
+                                      credit_card_exp,
+                                      result,
+                                      date,
+                                      date,
+                                      self
+                                      )
   end
 
   def all
