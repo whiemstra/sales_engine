@@ -3,9 +3,16 @@ require 'bigdecimal/util'
 
 class Invoice
 
-  attr_reader :id, :customer_id, :merchant_id, :status, :created_at, :updated_at, :repo
+  attr_reader :id,
+              :customer_id,
+              :merchant_id,
+              :status,
+              :created_at,
+              :updated_at,
+              :repo
 
-  def initialize(id, customer_id, merchant_id, status, created_at, updated_at, repo)
+  def initialize(id, customer_id, merchant_id, status,
+                 created_at, updated_at, repo)
     @id = id
     @customer_id = customer_id
     @merchant_id = merchant_id
@@ -19,8 +26,12 @@ class Invoice
     @repo.transactions(id)
   end
 
+  def time_format
+    Time.now.strftime('%Y-%m-%d %H:%M:%S UTC')
+  end
+
   def charge(credit_card_number:, credit_card_expiration_date:, result:)
-    date = Time.now.strftime('%Y-%m-%d %H:%M:%S UTC')
+    date = time_format
     @repo.charge(credit_card_number, credit_card_expiration_date, result, id, date)
   end
 

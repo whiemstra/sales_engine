@@ -44,19 +44,21 @@ class InvoiceRepository
     @invoices.last.id + 1
   end
 
+  def date_formatted
+    Time.now.strftime('%Y-%m-%d %H:%M:%S UTC')
+  end
+
   def create(customer:, merchant:, items:)
-    id = new_id
-    date = Time.now.strftime('%Y-%m-%d %H:%M:%S UTC')
-    # cust_obj = @engine.customer_repository.find_by_full_name(customer)
-    # merch_obj = @engine.merchant_repository.find_by_name(merchant)
-    @engine.invoice_item_repository.create(items, id, date)
-    new_invoice = Invoice.new(id, customer.id, merchant.id, 'shipped', date, date, self)
+    date = date_formatted
+    @engine.invoice_item_repository.create(items, new_id, date)
+    new_invoice = Invoice.new(new_id, customer.id, merchant.id, 'shipped', date, date, self)
     @invoices << new_invoice
     new_invoice
   end
 
   def charge(credit_card_number, credit_card_expiration, result, id, date)
-    @engine.transaction_repository.create(credit_card_number, credit_card_expiration, result, id, date)
+    @engine.transaction_repository
+      .create(credit_card_number, credit_card_expiration, result, id, date)
   end
 
   def all

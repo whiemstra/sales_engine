@@ -42,7 +42,9 @@ class Item
   end
 
   def success_invoice_by_date
-    successful_invoice_items.group_by { |invoice_item| invoice_item.invoice.created_at}
+    successful_invoice_items.group_by do |invoice_item|
+      invoice_item.invoice.created_at
+    end
   end
 
   def date_format(date)
