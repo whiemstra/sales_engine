@@ -51,5 +51,14 @@ class CustomerTest < Minitest::Test
     assert_equal Array, pending.class
     refute pending[0].successful?
   end
+
+  def test_counts_days_since_last_activity
+    se = SalesEngine.new('./data')
+    se.populate_transaction_repo
+    se.populate_invoice_repo
+    se.populate_customer_repo
+    customer = se.customer_repository.find_by_id(1)
+    assert_equal 1128, customer.days_since_activity.to_i
+  end
 end
 

@@ -45,4 +45,9 @@ class Customer
   def pending_invoices
     invoices.select { |invoice| invoice.successful? == false}
   end
+
+  def days_since_activity
+    date = transactions.map { |transaction| DateTime.parse(transaction.created_at) }.sort.last
+    (DateTime.now - date).to_i
+  end
 end
