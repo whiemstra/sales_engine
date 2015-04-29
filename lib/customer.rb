@@ -21,7 +21,7 @@ class Customer
   end
 
   def transactions
-    invoices.map { |invoice| invoice.transactions}.flatten
+    invoices.map(&:transactions).flatten
   end
 
   def favorite_merchant

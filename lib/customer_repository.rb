@@ -16,12 +16,12 @@ class CustomerRepository
   def populate(csv_object)
     csv_object.each do |row|
       @customers << Customer.new(
-                                row[:id].to_i, 
-                                row[:first_name],
-                                row[:last_name],
-                                row[:created_at],
-                                row[:updated_at],
-                                self
+                                  row[:id].to_i,
+                                  row[:first_name],
+                                  row[:last_name],
+                                  row[:created_at],
+                                  row[:updated_at],
+                                  self
                                 )
     end
   end
@@ -54,7 +54,7 @@ class CustomerRepository
     @customers.detect { |customer| customer.last_name == last_name }
   end
 
-  def find_by_full_name(full_name)
+  def find_by_full_name(full_name) #for fun
     name = full_name.split
     customer = find_all_by_first_name(name[0]) & find_all_by_last_name(name[1])
     customer[0]
