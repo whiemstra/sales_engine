@@ -104,7 +104,8 @@ class InvoiceItemRepository
     grouped_items = items.group_by { |item| item }
     item_and_quantity = grouped_items.map { |item, items| [item, items.size] }
     item_and_quantity.each do |item, quantity|
-      @invoice_items << InvoiceItem.new(new_id, item.id, invoice_id, quantity, item.unit_price, date, date, self)
+      @invoice_items << InvoiceItem.new(new_id, item.id, invoice_id, quantity,
+                                        item.unit_price, date, date, self)
     end
   end
 
