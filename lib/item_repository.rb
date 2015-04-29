@@ -28,18 +28,22 @@ class ItemRepository
     end
   end
 
+  def revenue_for_items
+    @items.map { |item| [-item.revenue, item.id] }.sort
+  end
+
   def most_revenue(num)
-    revenue_for_items = @items.map { |item| [item.revenue, item.id] }
-    sorted_revenue = revenue_for_items.sort
-    reversed_sorted_rev = sorted_revenue.reverse.take(num)
-    reversed_sorted_rev.map { |revenue, item_id| find_by_id(item_id) }
+    top_selling = revenue_for_items.take(num)
+    top_selling.map { |revenue, item_id| find_by_id(item_id) }
+  end
+
+  def items_sold
+    items.map { |item| [-item.number_sold, item.id]}.sort
   end
 
   def most_items(num)
-    items_sold = @items.map { |item| [item.number_sold, item.id]}
-    sorted_items = items_sold.sort
-    top_items = sorted_items.reverse.take(num)
-    top_items.map { |array| array[1] }.map { |id| find_by_id(id) }
+    top_items = items_sold.take(num)
+    top_items.map { |num_sold, id| find_by_id(id) }
   end
 
   def invoice_items(id)
