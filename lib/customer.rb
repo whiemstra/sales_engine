@@ -47,7 +47,9 @@ class Customer
   end
 
   def days_since_activity
-    date = transactions.map { |transaction| DateTime.parse(transaction.created_at) }.sort.last
+    date = transactions.map do |transaction|
+      DateTime.parse(transaction.created_at)
+    end.sort.last
     (DateTime.now - date).to_i
   end
 end
