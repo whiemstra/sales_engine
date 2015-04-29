@@ -157,4 +157,22 @@ class InvoiceRepoTest < MiniTest::Test
     assert_equal '12239.24', average.to_digits
   end
 
+  def test_find_average_items
+    se = SalesEngine.new('./data')
+    se.populate_transaction_repo
+    se.populate_invoice_repo
+    se.populate_invoice_item_repo
+    average = se.invoice_repository.average_items
+    assert_equal '24.45', average.to_digits
+  end
+
+  def test_find_average_items_by_date
+    se = SalesEngine.new('./data')
+    se.populate_transaction_repo
+    se.populate_invoice_repo
+    se.populate_invoice_item_repo
+    average = se.invoice_repository.average_items(DateTime.parse('2012-03-21 13:54:10 UTC'))
+    assert_equal '24.29', average.to_digits
+  end
+
 end
