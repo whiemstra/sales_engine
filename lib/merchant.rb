@@ -21,14 +21,27 @@ class Merchant
     uniq_cust_ids.map { |id| @repo.find_customer(id) }
   end
 
+  def successful_invoices
+    invoices.select(&:successful?)
+  end
+
   def favorite_customer
-    success_invoices = invoices.select { |invoice| invoice.successful?}
-    cust_id_hash = success_invoices.group_by {|invoice| invoice.customer_id}
+    cust_id_hash = successful_invoices.group_by(&:customer_id)
     cust_id_array = cust_id_hash.map do |cust_id, invoices|
       [invoices.size, cust_id]
     end
     winner_id = cust_id_array.sort[-1][1]
     @repo.find_customer(winner_id)
+
+
+
+    # success_invoices = invoices.select { |invoice| invoice.successful?}
+    # cust_id_hash = success_invoices.group_by {|invoice| invoice.customer_id}
+    # cust_id_array = cust_id_hash.map do |cust_id, invoices|
+    #   [invoices.size, cust_id]
+    # end
+    # winner_id = cust_id_array.sort[-1][1]
+    # @repo.find_customer(winner_id)
   end
 
   def revenue(date=nil)
